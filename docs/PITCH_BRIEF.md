@@ -113,15 +113,20 @@ The NO2-to-CO2 ratio changes with coal type, burner settings and pollution contr
 
 Sentinel-2 photographs each plot every few days. We compute a greenness score (NDVI) from red and near-infrared light. Living trees score high, and bare soil scores low. Each quarter, a plot with greenness of at least 0.35 and less than 30% cloud passes, and the payment is released. Below 0.35, the payment is held. Too cloudy: wait for the next clear photo. CO2 absorbed is estimated from the number of trees and the IPCC default, not measured.
 
-## 7. Pitch script (7 minutes)
+## 7. Pitch script (7 minutes, matches the deck)
 
-| Time | Section | What we say |
+Deck: `Satellite_Verification_Pitch_Deck.pptx` (IU template, 9 slides including Q&A). Satellite images used on slide 5: `docs/img/`.
+
+| Time | Slide | What we say |
 |---|---|---|
-| 0:00–1:00 | Problem and user | "A risk officer at a bank is renewing a loan to a coal power company. The company says it emits X and offsets Y with trees. The only proof is the company's own report. SBP now requires banks to manage climate risk. How does she check?" |
-| 1:00–2:00 | Solution | "We check both claims from space. NO2 from Sentinel-5P shows how hard the plant ran. Sentinel-2 shows whether the trees are alive. She gets one answer per claim: consistent, inconsistent or can't verify." |
-| 2:00–4:30 | Demo, one journey | Pick Sahiwal → see the plume map and monthly chart (our estimate, NEPRA, Climate TRACE) → enter the company's claim → verdict card → open the tree contracts → one plot verified and paid, one held → C04 buttons: impossible inputs rejected live |
-| 4:30–5:45 | Evidence | "About 77% accurate for a single month and about 93% for a year (85% in our strictest test). Our error is 62% smaller than the rule of thumb banks use and 30% smaller than raw satellite readings. When we tested understated yearly claims, it caught most of them (94–100%) and never flagged an honest one." Point at the shutdown months on the chart. Say which inputs are synthetic |
-| 5:45–7:00 | Value and limits | "Banks get independent evidence; farmers get paid for living trees. Limits: NO2 is not CO2, monsoon months can't be verified, two plants is a proof of concept. Next: more plants and a pilot with one bank." |
+| 0:00–0:30 | 1. Title | "We check both halves of a company's green claim, its pollution and its trees, from space. The satellite measures NO2, not CO2." |
+| 0:30–1:15 | 2. Problem | "A bank's risk officer is renewing a loan to a coal power company. The only evidence for its emissions and offsets is its own report. SECP disclosure starts 2026–27; SBP's climate-risk deadline is 2029." |
+| 1:15–1:45 | 3. Approach | "Each claim gets independent evidence: NO2 for emissions, Sentinel-2 for trees, and seven cross-checks between the report, the meter and the satellite." |
+| 1:45–2:30 | 4. Data | Walk the table: Sentinel-5P NO2 grid per daily pass, ERA5 wind, CPPA-G monthly Excel (matches NEPRA exactly), Sentinel-2 + WorldCover, the company report. "Downloaded once, saved as files; the demo doesn't need a live connection." |
+| 2:30–4:15 | 5. Live demo | Point at the two images first: the real NO2 plume over Sahiwal and the Sentinel-2 photo of the plant. Then the app: verdict strip → range plot → 3D map (plume rose, then tree contracts) → claim rows → Reliability tab, run all 8 checks. Say the company claims are synthetic |
+| 4:15–5:00 | 6. Evidence | "About 77% accurate for one month, so it refuses to judge a single month. About 93% for a year. Understated yearly claims caught 94–100% of the time, no honest claim flagged." |
+| 5:00–6:10 | 7. Challenges | C04 refused inputs, C07 62% and 30% less error (tree model 11.6%, an honest gap), C12 Climate TRACE off about 5x at Hub. Adaptation: verdicts moved to the fiscal year |
+| 6:10–7:00 | 8. Value, limits, next step | Exposure range, stated limits, pilot with one bank. Close: "Satellites can't see CO2, but they can tell a bank when a company's green numbers don't add up." |
 
 **Words we never use:** fraud, breach, proves, zero carbon, net zero.
 

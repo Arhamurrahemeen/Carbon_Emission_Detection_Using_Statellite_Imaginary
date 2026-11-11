@@ -10,6 +10,13 @@ The satellite measures NO2, not CO2. An INCONSISTENT result is a reason to ask q
 
 BattleVerse 2026, Iqra University · Battle of Intelligence · Pillar 5: Greenwashing & Disclosure Verification · Challenges C04, C07, C12
 
+## What the satellite sees
+
+| Sentinel-5P NO2 over Sahiwal, 2025 average | Sentinel-2 photo of the plant |
+|---|---|
+| ![NO2 plume over the Sahiwal coal plant](docs/img/no2_sahiwal_2025.png) | ![Sahiwal coal plant from Sentinel-2](docs/img/s2_sahiwal_plant.png) |
+| The plant (white circle) is the hotspot; the plume runs south-west to north-east | Coal yard, ash ponds and the railway line |
+
 ## Run it
 
 Needs Python 3.11+.
