@@ -95,7 +95,8 @@ def emissions_record(site: dict, month_row: dict | None, pred: dict | None, clai
     judged = {"message": MESSAGES["rejected"]} if status == "REJECTED" else _judge(claim, est, site, status)
     message = judged.pop("message")
     return make_record("emissions", codes, message, site_id=site["site_id"], period=period,
-                       valid_overpasses=n, **est, **judged, data_flags=_flags(month_row, claim))
+                       valid_overpasses=n, max_monthly_gwh=model.get("max_monthly_gwh"), **est, **judged,
+                       data_flags=_flags(month_row, claim))
 
 
 def fy_months(fy: str) -> list[str]:
@@ -103,17 +104,27 @@ def fy_months(fy: str) -> list[str]:
     return [str(p) for p in pd.period_range(f"{end - 1}-07", f"{end}-06", freq="M")]
 
 
-def fiscal_rollup(records: list[dict], fy: str, site: dict, claim: dict | None = None) -> dict:
+def fiscal_rollup(records: list[dict], fy: str, site: dict, claim: dict | None = None, inflate: float = 1.0) -> dict:
+    """inflate > 1 widens the year for positively autocorrelated monthly errors (effective sample size)."""
     months = set(fy_months(fy))
     recs = [r for r in records if r.get("period") in months and r["status"] != "REJECTED" and "estimate_gwh" in r]
-    thin = sum(r["status"] == "LOW_CONFIDENCE" for r in recs)
+    # A month that is only "too wide on its own" still counts: the year's width is re-checked below.
+    thin = sum(any(c != "W_WIDE_INTERVAL" for c in r["reason_codes"]) for r in recs)
     codes = _claim_codes(claim, site, fy)
     if len(recs) < len(months) or thin > RULES["fy_low_conf_max"]:
         codes.append("W_FEW_OBS")
     est = {}
     if recs:
-        est = {k: round(sum(r[k] for r in recs), 1) for k in ("estimate_gwh", "interval_low", "interval_high")}
+        # Independent monthly errors add in quadrature, so a year is much tighter than 12 x the monthly band.
+        total = sum(r["estimate_gwh"] for r in recs)
+        lo_half = math.sqrt(inflate * sum((r["estimate_gwh"] - r["interval_low"]) ** 2 for r in recs))
+        hi_half = math.sqrt(inflate * sum((r["interval_high"] - r["estimate_gwh"]) ** 2 for r in recs))
+        est = {"estimate_gwh": round(total, 1), "interval_low": round(max(0.0, total - lo_half), 1),
+               "interval_high": round(total + hi_half, 1)}
         est["co2_low_t"], est["co2_high_t"] = co2_range(est["interval_low"], est["interval_high"], site["ef_low"], site["ef_high"])
+        max_year = 12 * max((r.get("max_monthly_gwh") or 0) for r in recs) if any(r.get("max_monthly_gwh") for r in recs) else None
+        if max_year and est["interval_high"] - est["interval_low"] > RULES["max_interval_frac"] * max_year:
+            codes.append("W_WIDE_INTERVAL")
     codes = sorted(set(codes))
     status = status_for(codes)
     judged = {"message": MESSAGES["rejected"]} if status == "REJECTED" else _judge(claim, est, site, status)

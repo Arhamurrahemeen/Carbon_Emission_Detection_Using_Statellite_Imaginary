@@ -10,7 +10,9 @@ from verify.model import (
     fit,
     gain_pct,
     join_labels,
+    loo_predictions,
     predict,
+    window_detection,
 )
 from verify.rules import SITE_PLANTS
 from verify.synthetic import make_nepra, make_overpasses
@@ -58,6 +60,24 @@ def test_unlabelled_month_is_predicted_but_never_trained_on(data):
     assert m["n_train"] + m["n_test"] == d["generation_gwh"].notna().sum()
     model = fit(d.dropna(subset=["generation_gwh"]))
     assert not predict(model, d.tail(1)).isna().any().any()
+
+
+def test_loo_predictions_never_see_their_own_month(data):
+    lab = data.dropna(subset=["generation_gwh"]).reset_index(drop=True)
+    loo, q80, lag1 = loo_predictions(lab)
+    assert len(loo) == len(lab) and q80 > 0 and -1 <= lag1 <= 1
+    poisoned = lab.copy()
+    poisoned.loc[5, "generation_gwh"] = 1e6  # if month 5 leaked into its own fit, its prediction would explode
+    assert loo_predictions(poisoned)[0][5] < 5000
+
+
+def test_annual_window_detection(data):
+    lab = data.dropna(subset=["generation_gwh"]).reset_index(drop=True)
+    d = window_detection(lab, window=12)
+    assert d["n_windows"] == len(lab) - 11
+    assert d["by_scale"]["0.4"] >= 0.9
+    assert d["false_alarm_rate"] <= 0.3
+    assert set(d) >= {"detection_rate", "false_alarm_rate", "by_scale", "n_windows", "residual_lag1"}
 
 
 def test_capacity_baseline_and_gain():

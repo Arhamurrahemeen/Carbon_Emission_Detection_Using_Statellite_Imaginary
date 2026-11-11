@@ -71,6 +71,20 @@ def test_fiscal_rollup_low_confidence_when_too_many_thin_months():
     assert ok["status"] == "OK" and ok["verdict"] == "CONSISTENT"
 
 
+def test_fiscal_rollup_adds_monthly_errors_in_quadrature_and_rechecks_width():
+    months = ["2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12",
+              "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06"]
+    narrow_max = {**MODEL, "max_monthly_gwh": 200.0}  # a 160 GWh monthly interval is "too wide" for one month
+    recs = [emissions_record(SITE, _row(m), _pred(400), None, narrow_max) for m in months]
+    assert all(r["reason_codes"] == ["W_WIDE_INTERVAL"] for r in recs)
+    fy = fiscal_rollup(recs, "FY2025", SITE)
+    half = 80 * 12 ** 0.5
+    assert fy["status"] == "OK"
+    assert fy["interval_low"] == pytest.approx(4800 - half, abs=0.2)
+    assert fy["interval_high"] == pytest.approx(4800 + half, abs=0.2)
+    assert fy["months_low_confidence"] == 0
+
+
 def test_messages_never_use_banned_words():
     for text in MESSAGES.values():
         assert not any(w in text.lower() for w in BANNED_WORDS)

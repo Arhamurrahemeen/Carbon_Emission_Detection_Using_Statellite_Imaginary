@@ -57,6 +57,42 @@ def predict(model: dict, rows: pd.DataFrame) -> pd.DataFrame:
     }, index=rows.index)
 
 
+def loo_predictions(lab: pd.DataFrame) -> tuple[np.ndarray, float, float]:
+    """Leave-one-out: each month predicted by a model fitted without it. Returns (predictions, q80, lag-1
+    autocorrelation of the residuals in time order)."""
+    lab = lab.sort_values("month").reset_index(drop=True)
+    X, y = lab[FEATURES].to_numpy(), lab["generation_gwh"].to_numpy()
+    preds = np.empty(len(lab))
+    for i in range(len(lab)):
+        keep = np.arange(len(lab)) != i
+        preds[i] = max(0.0, _pipeline().fit(X[keep], y[keep]).predict(X[i:i + 1])[0])
+    res = y - preds
+    lag1 = float(np.corrcoef(res[:-1], res[1:])[0, 1]) if len(res) > 3 else 0.0
+    return preds, float(np.quantile(np.abs(res), RULES["interval_level"])), lag1
+
+
+def window_detection(lab: pd.DataFrame, window: int = 12, scales=(0.8, 0.6, 0.4, 1.0)) -> dict:
+    """Annual-claim test on rolling 12-month windows of leave-one-out estimates. Monthly errors are combined in
+    quadrature, inflated for positive autocorrelation (effective sample size), so a year is judged honestly."""
+    lab = lab.sort_values("month").reset_index(drop=True)
+    preds, q80, lag1 = loo_predictions(lab)
+    inflate = (1 + lag1) / (1 - lag1) if 0 < lag1 < 0.95 else 1.0
+    half = q80 * np.sqrt(window * inflate)
+    hits = {s: [] for s in scales}
+    for start in range(len(lab) - window + 1):
+        est = preds[start:start + window].sum()
+        actual = lab["generation_gwh"].iloc[start:start + window].sum()
+        lo, hi = max(0.0, est - half), est + half
+        for s in scales:
+            hits[s].append(not (lo <= actual * s <= hi))
+    mis = [h for s in scales if s < 1 for h in hits[s]]
+    return {"n_windows": len(lab) - window + 1, "window_months": window, "half_width_gwh": float(half),
+            "detection_rate": float(np.mean(mis)) if mis else None,
+            "false_alarm_rate": float(np.mean(hits[1.0])) if 1.0 in hits and hits[1.0] else None,
+            "by_scale": {str(s): float(np.mean(hits[s])) for s in scales if s < 1},
+            "residual_lag1": lag1, "q80_monthly_gwh": q80}
+
+
 def _hours(months: pd.Series) -> np.ndarray:
     return np.array([pd.Period(m, freq="M").days_in_month * 24 for m in months])
 

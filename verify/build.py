@@ -12,7 +12,7 @@ from verify import c07, claims as claims_mod, trees
 from verify.features import clean_overpasses, monthly_features
 from verify.gate import GUARD_CASES, check_tree_density
 from verify.io import SATELLITE_MONTHS, load_inputs
-from verify.model import evaluate, fit, join_labels, predict
+from verify.model import evaluate, fit, join_labels, predict, window_detection
 from verify.records import make_record
 from verify.rules import RULES, SITE_PLANTS
 from verify.synthetic import make_nepra
@@ -58,6 +58,8 @@ def _pollution(inputs, site, metrics, records, monthly_rows, synth_claim_recs):
     holdout = max(3, min(12, len(lab) // 3))
     metrics[sid] = evaluate(data, holdout, cap, RULES["fleet_pf_imported_coal"]) | {"label_source": label_source,
                                                                                  "overpasses_rejected": int(len(rejected))}
+    annual = window_detection(lab) if len(lab) >= 15 else None
+    metrics[sid]["annual"] = annual
     model = fit(lab)
     pred = predict(model, data)
     month_recs = []
@@ -157,8 +159,10 @@ def build(root: Path) -> dict:
 
     for site in inputs["sites"].to_dict("records"):
         month_recs, labels = _pollution(inputs, site, pollution, records, monthly_rows, synth_recs)
-        fy = fiscal_rollup(month_recs, DEMO_FY, site)
-        fy_prev = fiscal_rollup(month_recs, PREV_FY, site)
+        lag1 = (pollution[site["site_id"]].get("annual") or {}).get("residual_lag1", 0.0)
+        inflate = (1 + lag1) / (1 - lag1) if 0 < lag1 < 0.95 else 1.0
+        fy = fiscal_rollup(month_recs, DEMO_FY, site, inflate=inflate)
+        fy_prev = fiscal_rollup(month_recs, PREV_FY, site, inflate=inflate)
         records += [fy, fy_prev]
         metered_src = inputs["real_labels"] if inputs["real_labels"] is not None else labels
         metered, metered_prev = _fy_sum(metered_src, site["site_id"], DEMO_FY), _fy_sum(metered_src, site["site_id"], PREV_FY)
@@ -222,5 +226,10 @@ if __name__ == "__main__":
               f"gain vs capacity {p['gain_vs_capacity_pct']}%, vs raw NO2 {p['gain_vs_raw_pct']}% (labels: {p['label_source']})")
     t = m["trees"]["test"]
     print(f"trees: RF F1 {t['rf_f1']:.3f} vs threshold {t['baseline_tuned_f1']:.3f} (gain {t['gain_vs_tuned_pct']}%)")
-    print(f"claims: detection {m['claims']['detection_rate']}, false alarms {m['claims']['false_alarm_rate']}")
+    print(f"claims (monthly): detection {m['claims']['detection_rate']}, false alarms {m['claims']['false_alarm_rate']}")
+    for sid, p in m["pollution"].items():
+        a = p.get("annual")
+        if a:
+            print(f"{sid} annual windows: n={a['n_windows']} half-width {a['half_width_gwh']:.0f} GWh, detection {a['detection_rate']:.2f} "
+                  f"(by scale {a['by_scale']}), false alarms {a['false_alarm_rate']:.2f}, residual lag1 {a['residual_lag1']:.2f}")
     print("sources:", m["sources"])
