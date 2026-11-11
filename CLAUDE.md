@@ -21,7 +21,7 @@ streamlit run app/streamlit_app.py
 ## Layout
 
 - `verify/`: Python package, all logic. `rules.py` holds every threshold and bound; change numbers there, nowhere else.
-- `gee/`: Earth Engine Code Editor scripts. Run by a team member in their own account; outputs are committed to `data/raw/`. Python never calls Earth Engine.
+- `gee/`: Earth Engine Code Editor versions of the exports (same method as `scripts/export_*.py`). Outputs are committed to `data/raw/`; the pipeline and app never call Earth Engine.
 - `data/manual/`: hand-entered CSVs (sites, NEPRA, claims, plots, assumptions). Each row cites its source.
 - `data/raw/`: downloaded or exported data, never edited by hand.
 - `data/synthetic/`: generated test data. Every row has `data_flags` containing `synthetic`.
