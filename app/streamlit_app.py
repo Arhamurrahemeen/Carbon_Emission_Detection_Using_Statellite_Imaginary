@@ -18,7 +18,7 @@ from verify.records import make_record  # noqa: E402
 OUT = ROOT / "outputs"
 SHUTDOWNS = {"sahiwal": ["2024-11", "2025-02", "2025-10"]}  # months the meter shows the plant near zero
 PAIR_TITLE = {
-    "X1": "Company's table vs the electricity meter",
+    "X1": "Company's table vs metered grid sales",
     "X2": "Company's table vs the satellite",
     "X3": "Declared CO2 vs meter × emission factor",
     "X4": "Declared CO2 vs satellite-based CO2",

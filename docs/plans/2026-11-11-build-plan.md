@@ -1,3 +1,5 @@
+> **Historical record.** This is the plan as written on 11 Nov and executed. Later changes (CPPA-G labels, yearly verdicts, no funder split, app redesign) are listed at the top of the design spec.
+
 # Green Claims Verification: Build Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.

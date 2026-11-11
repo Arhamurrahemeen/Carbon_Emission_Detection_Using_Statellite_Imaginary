@@ -1,6 +1,16 @@
 # Design: Satellite Verification of Green Claims
 
-Status: draft for team review · Written 11 Nov 2026 (Day 2, 16:30) · Owner: Arham
+Status: built · Written 11 Nov 2026, updated 12 Nov · Owner: Arham
+
+> **What changed after this spec was written (read first).** Where the sections below disagree, this list wins.
+> 1. **Training labels:** monthly metered grid sales from CPPA-G Excel files (`data/raw/generation_monthly.csv`, Jul 2024 – Sep 2026, 27 months), not hand-typed NEPRA scans. FY2024-25 totals match NEPRA's annual report exactly.
+> 2. **Verdicts are per fiscal year.** Single months are too noisy (±250 GWh) and abstain with `W_WIDE_INTERVAL`. Monthly errors are combined in quadrature, widened for autocorrelation.
+> 3. **Shown estimates are out of sample:** months with known generation show leave-one-out estimates. An earlier 97.5% figure was withdrawn (leakage).
+> 4. **Framing (decided 12 Nov): verifying green claims.** Two claims, emissions and offsets, checked against satellite and meter. The factory pays farmers directly for living trees; no funder, no farmer/funder split, no marketplace.
+> 5. **Tree C07 result:** random forest F1 0.891 vs threshold 0.798 (11.6% gain), short of 15%; C07 is met by the emissions model (62% and 30% less error).
+> 6. **App:** redesigned to `DESIGN.md`: verdict strip, range plot, 3D satellite map (plume rose, tree contracts), plain-language claim rows. Deployed on Streamlit Community Cloud.
+> 7. **Hub** is two plants (CPHGC coal + Hub Power oil) sharing one plume; the oil plant barely ran.
+> 8. Full record of decisions: `docs/DISCUSSION_LOG.md`.
 Event: BattleVerse 2026, Battle of Intelligence, Pillar 5 · Challenges: C04, C07, C12
 Plain-language companion: [PITCH_BRIEF.md](../PITCH_BRIEF.md)
 
@@ -14,7 +24,7 @@ A bank's environmental risk officer is reviewing a loan to a coal power company.
 
 We build a system that checks both claims against independent evidence and returns one answer per claim: **CONSISTENT**, **INCONSISTENT** or **CANNOT_VERIFY**. When inputs are impossible or evidence is thin, it refuses rather than guesses.
 
-- **Pollution evidence:** Sentinel-5P NO2 around the plant, corrected for wind, turned into an estimate of monthly generation by a model trained on NEPRA's metered records. Turned into CO2 with emission factors, always as a range.
+- **Pollution evidence:** Sentinel-5P NO2 around the plant, corrected for wind, turned into an estimate of monthly generation by a model trained on metered grid sales (CPPA-G). Turned into CO2 with emission factors, always as a range.
 - **Tree evidence:** Sentinel-2 imagery of each offset plot, classified tree / not tree, checked every quarter. Payments to the farmer are released only on a pass.
 
 ### Why now

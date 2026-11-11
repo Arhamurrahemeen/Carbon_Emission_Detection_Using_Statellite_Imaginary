@@ -78,7 +78,7 @@ No all-caps labels with wide tracking. Sentence case everywhere.
 
 **Range plot** (the proof): one horizontal bar per claim period. The teal band is the satellite 80% range; markers sit on it: company claim (red dot if outside the band, green if inside), metered figure (black tick), Climate TRACE (grey hollow dot). Title states the question: "Does the company's figure fall inside what the satellite supports?"
 
-**Claim rows** (C12): one row per cross-check, in plain words. Left: what was compared ("Company's table vs the electricity meter"). Middle: the two values. Right: result word with its colour. No raw codes on this view.
+**Claim rows** (C12): one row per cross-check, in plain words. Left: what was compared ("Company's table vs metered grid sales"). Middle: the two values. Right: result word with its colour. No raw codes on this view.
 
 **3D map** (pydeck, pitch 50°). **Basemap: real satellite imagery**, the EOX *Sentinel-2 cloudless* mosaic (the same satellite family as our tree check; free with attribution, CC BY-NC-SA 4.0, fine for this non-commercial demo), draped on AWS Terrain Tiles. A toggle switches to a plain light map (Carto) for projectors that wash out imagery. On imagery the accent is drawn as `sat-bright` `#3FC6CF` so it holds 3:1 against dark fields; on the light map it stays `sat`. *Trade-off:* map tiles need internet; every number, chart and verdict works offline.
 - *Plant view:* a teal column for the satellite CO2 estimate and a grey column beside it for Climate TRACE, both scaled to the same tonnes. Teal hexagons, extruded by summed plume strength, at the downwind point of each real overpass over the last 24 months. Together they form a "plume rose" showing where the pollution really goes.

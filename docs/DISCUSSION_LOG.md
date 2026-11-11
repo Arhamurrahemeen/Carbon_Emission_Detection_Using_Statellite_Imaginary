@@ -28,7 +28,7 @@ Yes. A company makes two green claims, "we emit X" and "we offset Y with trees",
 "We check both halves of a company's green claim, its pollution and its trees, from space, before any money moves."
 
 ### 8. Should the pitch be framed as "verifying green claims"? (Decided: yes, 12 Nov)
-Proposed: pitch as verifying two kinds of claims (emissions and offsets), with tree payments as one sentence, and drop the marketplace and the farmer/funder split from the main story. Reason: the Intelligence track rewards AI improving a decision, and the marketplace and payments are operations, not AI. **Decided by the team on 12 Nov.** The app now pays farmers directly from the factory (no funder split) and the Trees tab checks the tree claim.
+Pitch as verifying two kinds of claims (emissions and offsets), with tree payments as one sentence, and drop the marketplace and the farmer/funder split from the main story. Reason: the Intelligence track rewards AI improving a decision, and the marketplace and payments are operations, not AI. **Decided by the team on 12 Nov.** The app now pays farmers directly from the factory (no funder split) and the Trees tab checks the tree claim.
 
 ---
 

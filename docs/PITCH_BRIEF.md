@@ -138,12 +138,12 @@ Deck: `Satellite_Verification_Pitch_Deck.pptx` (IU template, 9 slides including 
 1. **Why would a bank pay for this?** SBP requires climate-risk management, with full compliance by 2029. Today a bank's only evidence is the borrower's own report. We are a cheap, independent second source.
 2. **Why not let the company pay?** Then the company pays for its own report card, the same problem we are solving.
 3. **Who else does this?** GHGSat, Kayrros and Floodlight sell satellite emission checks abroad. Nobody checks disclosures this way in Pakistan, and no other Pillar 5 team here uses satellites.
-4. **How do you make money?** Yearly fee per company checked, plus a small fee per tree payment. Demo numbers, not tested with banks.
+4. **How do you make money?** Yearly fee per company checked. Demo numbers, not tested with banks.
 5. **Do banks actually want this?** Not yet at scale. Regulation is creating the need now. That is our "why now", and our next step is one pilot bank.
 
 **Technical**
 
-6. **Satellites can't see CO2.** Correct. We measure NO2, estimate activity trained on NEPRA's metered records, then calculate CO2 as a range labelled "estimated".
+6. **Satellites can't see CO2.** Correct. We measure NO2, estimate activity trained on metered grid sales (CPPA-G, matching NEPRA), then calculate CO2 as a range labelled "estimated".
 7. **Why NO2 and not SO2?** NO2 has a stronger, cleaner satellite signal at single plants. SO2 is noisier, and scrubbers at modern plants cut SO2 without changing coal burned.
 8. **How accurate is it?** About 77% for a single month, so one month alone is too uncertain and the system refuses to judge it. About 93% for a whole year on average (worst year about 80%; our strictest test, learning only from the past, gave 85%). Every one of these figures was tested on months the model had never seen. An earlier 97.5% figure was withdrawn because the model had already seen those months.
 9. **What if the model is wrong?** It says "can't verify" instead of guessing: too few clear days, inputs it hasn't seen, ranges too wide. C04 shows this live.
