@@ -1,7 +1,7 @@
-plot_id,farmer,village,lat,lon,acres,trees_planted,contract_since,financier,site_id,data_flags
-m1,Noor Ahmed Baloch,"Malir, Karachi",24.9291,67.2309,3,1200,2025-08,bank,sahiwal,invented_farmer
-m2,Zubaida Khatoon,Mirpur Khas,25.4796,69.1744,3,1000,2025-06,investor,sahiwal,invented_farmer
-s1,Allah Dino Khoso,"Memon Goth, Malir, Karachi",24.97,67.3,25,12500,2026-02,bank,sahiwal,invented_farmer
-s2,Sakina Bhatti,"Gharo, Thatta",24.74,67.6,32,16000,2026-02,bank,sahiwal,invented_farmer
-s3,Hakim Ali Soomro,"Kotri, Jamshoro",25.38,68.3,22,8000,2025-11,investor,sahiwal,invented_farmer
-s4,Rafiq Chandio,Tando Allahyar,25.46,68.72,2,1000,2026-02,bank,sahiwal,invented_farmer
+plot_id,farmer,village,lat,lon,acres,trees_planted,contract_since,site_id,data_flags
+m1,Noor Ahmed Baloch,"Malir, Karachi",24.9291,67.2309,3,1200,2025-08,sahiwal,invented_farmer
+m2,Zubaida Khatoon,Mirpur Khas,25.4796,69.1744,3,1000,2025-06,sahiwal,invented_farmer
+s1,Allah Dino Khoso,"Memon Goth, Malir, Karachi",24.97,67.3,25,12500,2026-02,sahiwal,invented_farmer
+s2,Sakina Bhatti,"Gharo, Thatta",24.74,67.6,32,16000,2026-02,sahiwal,invented_farmer
+s3,Hakim Ali Soomro,"Kotri, Jamshoro",25.38,68.3,22,8000,2025-11,sahiwal,invented_farmer
+s4,Rafiq Chandio,Tando Allahyar,25.46,68.72,2,1000,2026-02,sahiwal,invented_farmer

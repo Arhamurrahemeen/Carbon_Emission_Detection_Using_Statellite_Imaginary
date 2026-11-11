@@ -32,7 +32,7 @@ def range_plot(est: dict, claim: float | None, metered: float | None, trace: flo
                              name=f"Satellite estimate {mid:,.0f} (80% range {lo:,.0f}–{hi:,.0f})"))
     if metered is not None:
         fig.add_trace(go.Scatter(x=[metered], y=[0], mode="markers", marker={"symbol": "diamond", "size": 13, "color": INK},
-                                 name=f"Electricity meter {metered:,.0f}"))
+                                 name=f"Metered sales to the grid {metered:,.0f}"))
     if trace is not None:
         fig.add_trace(go.Scatter(x=[trace], y=[0], mode="markers", marker={"symbol": "circle-open", "size": 14, "line": {"width": 2, "color": MODEL}},
                                  name=f"Climate TRACE model {trace:,.0f} (calendar year)"))
@@ -52,7 +52,7 @@ def range_plot(est: dict, claim: float | None, metered: float | None, trace: flo
 def timeline(mon: pd.DataFrame, shutdowns: list[str]):
     fig = go.Figure()
     if "metered_gwh" in mon and mon["metered_gwh"].notna().any():
-        fig.add_trace(go.Bar(x=mon["month"], y=mon["metered_gwh"], name="Electricity meter (CPPA-G)", marker_color=INK, opacity=0.78))
+        fig.add_trace(go.Bar(x=mon["month"], y=mon["metered_gwh"], name="Metered sales to the grid (CPPA-G)", marker_color=INK, opacity=0.78))
     fig.add_trace(go.Scatter(x=mon["month"], y=mon["interval_high"], line={"width": 0}, showlegend=False, hoverinfo="skip"))
     fig.add_trace(go.Scatter(x=mon["month"], y=mon["interval_low"], fill="tonexty", fillcolor="rgba(15,107,117,0.16)",
                              line={"width": 0}, name="Satellite 80% range", hoverinfo="skip"))

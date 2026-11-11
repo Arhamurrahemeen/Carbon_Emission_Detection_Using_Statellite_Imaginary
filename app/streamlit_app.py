@@ -112,7 +112,7 @@ with tab_v:
           <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:24px'>
             <div><div class='fig-label'>Satellite estimate, FY2026</div><div class='fig num' style='color:{charts.SAT}'>{e['estimate_gwh']:,.0f} GWh</div>
                  <div class='fig-label num'>80% range {e['interval_low']:,.0f}–{e['interval_high']:,.0f}</div></div>
-            <div><div class='fig-label'>Electricity meter, FY2026</div><div class='fig num'>{metered:,.0f} GWh</div>
+            <div><div class='fig-label'>Metered sales to the grid, FY2026</div><div class='fig num'>{metered:,.0f} GWh</div>
                  <div class='fig-label'>CPPA-G metered purchases</div></div>
             <div><div class='fig-label'>Company says</div><div class='fig num' style='color:{charts.FLAG}'>{claim_val:,.0f} GWh</div>
                  <div class='fig-label'>{(claim_val / metered - 1) * 100:+.0f}% vs the meter</div></div>
@@ -167,9 +167,9 @@ with tab_v:
 # ------------------------------------------------------------------ Trees
 with tab_t:
     t = D["trees"]
-    st.markdown("#### Farmers are paid only when the satellite sees the trees alive")
+    st.markdown("#### The company's tree claim, checked plot by plot")
     a, b, c = st.columns(3)
-    a.metric("Paid to farmers and funders", f"PKR {t['released'].sum():,.0f}")
+    a.metric("Paid to farmers for living trees", f"PKR {t['released'].sum():,.0f}")
     b.metric("Held back: no trees seen", f"PKR {t['held'].sum():,.0f}")
     c.metric("Trees on plots seen alive", f"{M['verified_trees']:,}")
     plots = latest_plot_status()

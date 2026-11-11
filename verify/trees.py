@@ -28,9 +28,9 @@ def verify_pass(row: dict, latest_imagery: str, tree_prob: float | None) -> tupl
 
 def payout(trees: int, status: str) -> dict:
     due = float(trees * RULES["price_per_tree_year"] / RULES["passes_per_year"])
-    zero = {"released": 0.0, "farmer": 0.0, "financier": 0.0, "held": 0.0}
+    zero = {"released": 0.0, "held": 0.0}
     if status == "verified":
-        return {"released": due, "farmer": due * RULES["farmer_share"], "financier": due * (1 - RULES["farmer_share"]), "held": 0.0}
+        return {"released": due, "held": 0.0}  # the factory pays the farmer, only for trees seen alive
     if status in ("failed", "invalid"):
         return {**zero, "held": due}
     return zero

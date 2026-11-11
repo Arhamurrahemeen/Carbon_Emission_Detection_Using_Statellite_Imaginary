@@ -37,7 +37,7 @@ def test_build_on_empty_data_is_fully_synthetic_and_complete(tmp_path):
     assert (pp["enhancement"] >= 0).all() and pp["site_id"].nunique() == 2
     t = pd.read_csv(root / "outputs" / "tree_passes.csv")
     assert t["farmer_name"].map(lambda s: isinstance(s, str)).all()
-    assert {"farmer_pkr", "financier_pkr", "released", "held"} <= set(t.columns)
+    assert {"released", "held"} <= set(t.columns) and "financier_pkr" not in t.columns
     g = pd.read_csv(root / "outputs" / "guard_results.csv")
     assert len(g) == 8 and (g["passed"]).all()
 

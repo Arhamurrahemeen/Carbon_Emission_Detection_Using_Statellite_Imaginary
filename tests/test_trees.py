@@ -28,10 +28,10 @@ def test_classifier_decides_alive_or_not():
 
 
 def test_payouts():
-    assert payout(1200, "verified") == {"released": 120000.0, "farmer": 72000.0, "financier": 48000.0, "held": 0.0}
+    assert payout(1200, "verified") == {"released": 120000.0, "held": 0.0}  # factory pays the farmer, only for living trees
     assert payout(1200, "failed")["held"] == 120000.0
     assert payout(1200, "invalid")["held"] == 120000.0
-    assert payout(1200, "cloudy") == {"released": 0.0, "farmer": 0.0, "financier": 0.0, "held": 0.0}
+    assert payout(1200, "cloudy") == {"released": 0.0, "held": 0.0}
 
 
 def test_verified_trees_counts_only_verified_plots():

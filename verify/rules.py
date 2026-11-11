@@ -36,7 +36,6 @@ RULES = {
     # Tree payments (demo values, labelled in the app)
     "price_per_tree_year": 400,        # PKR
     "passes_per_year": 4,
-    "farmer_share": 0.6,
     "claim_types": ("generation", "co2_total", "co2_intensity", "reduction_pct", "trees_planted"),
 }
 

@@ -162,8 +162,7 @@ def _trees(inputs, records, rows):
                                        pass_status=status, data_flags=sorted(set(flags)), **pay))
             rows.append({"plot_id": p["plot_id"], "farmer_name": p["farmer"], "date": row["date"], "ndvi": row.get("ndvi"),
                          "cloud": row.get("cloud"), "status": status, "reason_codes": ";".join(codes),
-                         "trees": p["trees_planted"], "released": pay["released"], "farmer_pkr": pay["farmer"],
-                         "financier_pkr": pay["financier"], "held": pay["held"], "data_flags": ";".join(sorted(set(flags)))})
+                         "trees": p["trees_planted"], "released": pay["released"], "held": pay["held"], "data_flags": ";".join(sorted(set(flags)))})
             if status in ("verified", "failed", "invalid"):
                 latest[p["plot_id"]] = status
     return trees.verified_trees(plots, latest)
