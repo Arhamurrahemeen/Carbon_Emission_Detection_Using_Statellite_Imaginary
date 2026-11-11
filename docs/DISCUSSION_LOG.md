@@ -27,8 +27,8 @@ Yes. A company makes two green claims, "we emit X" and "we offset Y with trees",
 ### 7. The merged idea in one line?
 "We check both halves of a company's green claim, its pollution and its trees, from space, before any money moves."
 
-### 8. Should the pitch be framed as "verifying green claims"? (Still open)
-Proposed: pitch as verifying two kinds of claims (emissions and offsets), with tree payments as one sentence, and drop the marketplace and the farmer/funder split from the main story. Reason: the Intelligence track rewards AI improving a decision, and the marketplace and payments are operations, not AI. **Not yet confirmed by the team.**
+### 8. Should the pitch be framed as "verifying green claims"? (Decided: yes, 12 Nov)
+Proposed: pitch as verifying two kinds of claims (emissions and offsets), with tree payments as one sentence, and drop the marketplace and the farmer/funder split from the main story. Reason: the Intelligence track rewards AI improving a decision, and the marketplace and payments are operations, not AI. **Decided by the team on 12 Nov.** The app now pays farmers directly from the factory (no funder split) and the Trees tab checks the tree claim.
 
 ---
 
@@ -175,8 +175,11 @@ IU shared the **Battle of Stocks** template. We kept its look and timed structur
 
 ---
 
+### 35. The app shows an "Electricity meter" number. Where does it come from, and why?
+It's CPPA-G's monthly record of electricity each plant sold to the grid, measured by meters and published as Excel (it matches NEPRA's annual report). It's the model's answer key for training and testing, our proof the satellite tracks reality (5,896 vs 6,138 GWh), and cross-check X1. Renamed in the app to "Metered sales to the grid (CPPA-G)".
+**"If you have the meter, why the satellite?"** The meter only exists for plants selling to the grid and only shows electricity; factories, cement, steel and captive plants have none. The satellite is independent, works anywhere and goes back to 2018 (monthly meter files only to July 2024). We train and prove it where both exist, then it can check where no meter is published.
+
 ## Still open
-- Confirm the "verifying green claims" framing (question 8).
 - A real company figure from Hub Power's annual report.
-- Team number on slide 1; re-export the deck PDF.
+- Re-export the deck PDF (team number Team 13, IU3048, is now on slide 1).
 - Optional: the "check a claim" input box (question 29).

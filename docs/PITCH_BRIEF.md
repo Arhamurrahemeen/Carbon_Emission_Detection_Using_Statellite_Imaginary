@@ -29,8 +29,8 @@ Today nobody checks either claim independently. Banks just read the company's ow
 
 We check both:
 
-- **Pollution check.** A satellite measures the NO2 gas rising from the plant. Our model, trained on NEPRA's official generation records, estimates how hard the plant really ran. If the company's number doesn't fit, we flag it.
-- **Tree check.** The company pays farmers to plant trees. Every quarter a satellite photo shows whether the trees are alive. Alive means the farmer is paid. Dead or missing means the money is held.
+- **Pollution check.** A satellite measures the NO2 gas rising from the plant. Our model, trained on metered generation records (CPPA-G, matching NEPRA), estimates how hard the plant really ran. If the company's number doesn't fit, we flag it.
+- **Tree check.** The company says it planted trees. Every quarter a satellite photo of each plot shows whether trees are actually there and alive. We compare trees claimed with trees seen. (The same check can release the company's payments to farmers only for living trees: one sentence in the pitch, not the main story.)
 - **One answer for the bank.** For each claim: **Consistent**, **Inconsistent** or **Can't verify**.
 
 When the data is impossible or too weak (a cloudy photo, a location that doesn't exist, a 200% reduction), the system refuses to answer instead of guessing. That is our C04 challenge.
@@ -42,14 +42,15 @@ When the data is impossible or too weak (a cloudy photo, a location that doesn't
 | Role | Who | What they do | What they get |
 |---|---|---|---|
 | **User and payer** | **Environmental or credit risk officer at a Pakistani bank** (second user: ESG fund analyst) | Approves, reprices or questions a loan to a coal power company | Independent evidence for SBP climate-risk reporting, early warning on risky borrowers, protection for "green" loan labels |
-| Participant | Coal power company (e.g. Sahiwal, Hub) | Makes the claims we check; buys tree contracts | A *verified* offset claim, which is worth more to lenders and buyers than an unverified one |
-| Participant | Farmer | Plants and maintains trees | 60% of each verified payment, plus planting money upfront |
-| Participant | Bank or investor funding the planting | Lends planting money | 40% of each verified payment; the loan is safe because money moves only when trees are alive |
-| Data sources | NEPRA, Sentinel satellites, Climate TRACE | Supply evidence | None |
+| Participant | Coal power company (e.g. Sahiwal, Hub) | Makes the emissions and offset claims we check; pays farmers for its trees | A claim lenders and buyers can trust |
+| Participant | Farmer | Plants and maintains the company's trees | Paid by the company, only for trees seen alive |
+| Data sources | CPPA-G and NEPRA (metered generation), Sentinel satellites, ERA5, Climate TRACE | Supply evidence | None |
 
 **Why the bank pays, not the company:** if the company paid for its own check, we would rebuild the problem we are solving, the company grading its own report card.
 
-**How we earn (demo assumption, label it on the slide):** a yearly fee per company the bank checks, plus a small fee on each tree payment.
+**How we earn (demo assumption, label it on the slide):** a yearly fee per company the bank checks.
+
+**Decided 12 Nov: pitch as "verifying green claims".** Two kinds of claim (emissions and offsets), one kind of evidence (satellite plus meter). No investor or funder in the tree story: the factory owns its offsets and pays the farmer directly; we only verify. See `DISCUSSION_LOG.md` questions 8 and 12–14.
 
 **Honest weakness:** Pakistani banks don't buy tools like this today. Demand is starting because of regulation (next section). Say this ourselves.
 

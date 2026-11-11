@@ -26,8 +26,7 @@ SECP ordered IFRS S1/S2 climate disclosure on 31 Dec 2024, phased for listed com
 |---|---|---|
 | **User and payer** | Environmental / credit risk officer at a Pakistani bank. Secondary: ESG fund analyst | Opens the main screen, reads verdicts, decides on the loan |
 | Participant | Coal power company (Sahiwal, CPHGC Hub) | Source of the claims being checked; buys tree contracts |
-| Participant | Farmer | Plot owner; gets 60% of each verified payment |
-| Participant | Planting financier (bank or investor) | Gets 40% of each verified payment |
+| Participant | Farmer | Plot owner; paid by the company only for trees seen alive |
 | Data sources | NEPRA, Copernicus (Sentinel-5P, Sentinel-2), ECMWF ERA5, Climate TRACE, ESA WorldCover | Evidence only |
 
 The company never pays for its own check; that would rebuild the self-reporting problem.
@@ -112,11 +111,11 @@ The company never pays for its own check; that would rebuild the self-reporting 
 6. **CO2.** `co2 = generation_MWh × EF`, EF range per site in `sites.csv` (low/high). The final range spans the low end of the generation interval × EF_low to the high end × EF_high. Always labelled "derived, not measured".
 
 ### 7.2 Tree pipeline
-1. **Plots.** `data/manual/plots.csv`: plot_id, farmer (invented, labelled), lat, lon, acres, trees_planted, contract_since, financier, linked site_id.
+1. **Plots.** `data/manual/plots.csv`: plot_id, farmer (invented, labelled), lat, lon, acres, trees_planted, contract_since, linked site_id.
 2. **Quarterly passes (Earth Engine).** Adapt Shajar's `gee/export_data.js`: per plot and quarter date, the clearest Sentinel-2 image within ±15 days, masked with Cloud Score+ (≥0.6 clear), giving NDVI, cloud fraction, and the classifier features used in C07.
 3. **Classifier.** Random forest trained on Sentinel-2 annual features (NDVI percentiles, std dev, band medians, NDMI), labels from ESA WorldCover tree class plus the team's hand labels (Shajar's `c07/label.html` approach). Baseline = single NDVI threshold tuned on training points (§10.2).
 4. **Pass verdict.** Plot passes if the classifier says tree with probability ≥0.5 **and** cloud ≤30%. Statuses: `verified`, `failed`, `cloudy`, `no_imagery`, `invalid`.
-5. **Payout.** Per pass: `trees × price_per_tree_year / passes_per_year`. Verified → released, split 60/40 farmer/financier. Failed or invalid → held. Cloudy or no imagery → nothing paid or held, wait. Prices are labelled demo values.
+5. **Payout.** Per pass: `trees × price_per_tree_year / passes_per_year`. Verified → released to the farmer by the company (no funder split; decided 12 Nov). Failed or invalid → held. Cloudy or no imagery → nothing paid or held, wait. Prices are labelled demo values.
 6. **Tree claim.** The company's text claim ("planted 50,000 trees") is compared with trees on plots whose latest pass is verified. Feeds C12.
 
 ### 7.3 Claims and cross-check (C12)
@@ -331,7 +330,7 @@ Source: *Battle of Intelligence Judge Pack*, 100 marks. A missing piece of evide
 1. **Carbon cost exposure:** CO2 range (t) × carbon price scenarios. Use a low and a high illustrative price, e.g. the EU CBAM-linked EU ETS price and a lower voluntary-market price. Label both as scenarios; Pakistan has no domestic carbon price.
 2. **Exposure from a misstatement:** (satellite CO2 range − declared CO2) × the same prices = the cost the bank would not see if it trusted the disclosure.
 3. **Cost of checking:** our per-company fee (demo assumption) vs a manual site audit (sourced estimate or a labelled assumption).
-4. **Tree side:** verified payments released vs held, and payments the funder avoided on failed plots.
+4. **Tree side:** verified payments released vs held; held money is what the company avoided paying for trees that are not there.
 
 The app shows these as ranges on the verdict card, with an "assumptions" expander. No single-point PKR or USD figure without a range.
 
