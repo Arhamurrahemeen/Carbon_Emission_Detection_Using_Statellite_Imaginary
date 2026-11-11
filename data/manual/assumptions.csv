@@ -1,0 +1,6 @@
+key,value,unit,source,demo_assumption
+carbon_price_low,5,USD per t CO2,"Illustrative voluntary-market price for nature-based credits; verify against a current market report before pitching",yes
+carbon_price_high,80,USD per t CO2,"Order of magnitude of the EU ETS allowance price, the reference for EU CBAM; verify current price and date before pitching",yes
+usd_pkr,280,PKR per USD,"Approximate rate; verify on SBP site on pitch day",yes
+fee_per_company_pkr,500000,PKR per company per year,"Our demo pricing, not tested with banks",yes
+manual_audit_cost_pkr,2000000,PKR per site visit,"Demo assumption for a third-party site audit; replace with a sourced quote if found",yes
