@@ -1,9 +1,18 @@
 # Pitch Brief: Satellite Verification of Green Claims
 
+New words are explained in [GLOSSARY.md](GLOSSARY.md).
+
 BattleVerse 2026 · Battle of Intelligence · Pillar 5 (Greenwashing & Disclosure Verification) · Challenge C04
 Draft, 11 Nov 2026. Items marked **(verify)** need checking before they go on a slide.
 
 ---
+
+## Accuracy in one breath
+
+- **About 77% accurate for one month.** Too uncertain to judge a single month, so the system refuses to.
+- **About 93% accurate for a year** on average (85% in the strictest test).
+- **62% less error than the rule of thumb** banks use today, and 30% less than raw satellite readings. C07 asks for 15%.
+- All tested on months the model had never seen.
 
 ## 1. The project in one line
 
@@ -111,7 +120,7 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 | 0:00–1:00 | Problem and user | "A risk officer at a bank is renewing a loan to a coal power company. The company says it emits X and offsets Y with trees. The only proof is the company's own report. SBP now requires banks to manage climate risk. How does she check?" |
 | 1:00–2:00 | Solution | "We check both claims from space. NO2 from Sentinel-5P shows how hard the plant ran. Sentinel-2 shows whether the trees are alive. She gets one answer per claim: consistent, inconsistent or can't verify." |
 | 2:00–4:30 | Demo, one journey | Pick Sahiwal → see the plume map and monthly chart (our estimate, NEPRA, Climate TRACE) → enter the company's claim → verdict card → open the tree contracts → one plot verified and paid, one held → C04 buttons: impossible inputs rejected live |
-| 4:30–5:45 | Evidence | Monthly plume vs metered generation r = 0.62; 61.7% better than the capacity rule of thumb and 30.4% better than raw NO2 (C07); annual understatements of 20%+ caught in 94–100% of windows with 0 false alarms; FY2026 satellite 5,896 vs metered 6,138 GWh (3.9% low, out of sample). Shutdown months (Feb 2025, Oct 2025) on the chart. Label every synthetic input |
+| 4:30–5:45 | Evidence | "About 77% accurate for a single month and about 93% for a year (85% in our strictest test). Our error is 62% smaller than the rule of thumb banks use and 30% smaller than raw satellite readings. When we tested understated yearly claims, it caught most of them (94–100%) and never flagged an honest one." Point at the shutdown months on the chart. Say which inputs are synthetic |
 | 5:45–7:00 | Value and limits | "Banks get independent evidence; farmers get paid for living trees. Limits: NO2 is not CO2, monsoon months can't be verified, two plants is a proof of concept. Next: more plants and a pilot with one bank." |
 
 **Words we never use:** fraud, breach, proves, zero carbon, net zero.
@@ -130,7 +139,7 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 
 6. **Satellites can't see CO2.** Correct. We measure NO2, estimate activity trained on NEPRA's metered records, then calculate CO2 as a range labelled "estimated".
 7. **Why NO2 and not SO2?** NO2 has a stronger, cleaner satellite signal at single plants. SO2 is noisier, and scrubbers at modern plants cut SO2 without changing coal burned.
-8. **How accurate is it?** Month by month, it is noisy: r = 0.45 and an error of about 170 GWh on 9 held-out months, so single months abstain. Over a year the noise averages out: about 7% average error on a year (worst 20%), FY2026 3.9% low when every month is predicted without its own answer, and annual understatements of 20% or more were caught in 94–100% of test windows with no false alarms. Across all 27 months the plume correlates with metered generation at r = 0.62.
+8. **How accurate is it?** About 77% for a single month, so one month alone is too uncertain and the system refuses to judge it. About 93% for a whole year on average (worst year about 80%; our strictest test, learning only from the past, gave 85%). Every one of these figures was tested on months the model had never seen. An earlier 97.5% figure was withdrawn because the model had already seen those months.
 9. **What if the model is wrong?** It says "can't verify" instead of guessing: too few clear days, inputs it hasn't seen, ranges too wide. C04 shows this live.
 10. **What about monsoon clouds?** July–September often can't be verified. We say so on screen.
 11. **What if the plant installs pollution controls?** Controls cut NO2 without cutting coal burned, so it would look like a drop in activity. We record each plant's equipment and dates, and treat a change as a break in the data.
@@ -156,8 +165,8 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 | Challenge | Our answer | Evidence |
 |---|---|---|
 | C04 out-of-bounds guard | 8 live cases: 5 rejected, 1 low confidence, 1 claim not in source, 1 noise control | All pass; real monthly data abstains by itself |
-| C07 beat a baseline by 15% | Ridge on wind-corrected plume vs capacity rule and raw NO2 | 61.7% and 30.4% lower error |
-| C12 multimodal cross-check | Report table vs text vs meter vs satellite vs tree plots (7 checks) | 94–100% of understated annual claims caught, 0 false alarms |
+| C07 beat a baseline by 15% | Our model vs two simple methods: a rule of thumb (plants run at about 23% of capacity) and raw satellite readings | Our error is 62% and 30% smaller (misses by 170 GWh a month vs 442 and 244) |
+| C12 multimodal cross-check | The company's table vs its own text vs the meter vs the satellite vs the tree plots (7 checks) | Caught 94–100% of yearly claims understated by 20% or more, with no false alarms (likely a little optimistic: see CHALLENGES.md) |
 
 Full write-up: `docs/CHALLENGES.md`.
 

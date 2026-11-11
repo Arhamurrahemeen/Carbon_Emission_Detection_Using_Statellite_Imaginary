@@ -68,6 +68,7 @@ Sources, licences and download dates: [evidence_pack.md](evidence_pack.md).
 - [Build plan](docs/plans/2026-11-11-build-plan.md)
 - [Challenges C04, C07, C12](docs/CHALLENGES.md)
 - [Pitch brief and jury Q&A](docs/PITCH_BRIEF.md)
+- [Glossary: every term in plain words](docs/GLOSSARY.md)
 
 ## Team
 
