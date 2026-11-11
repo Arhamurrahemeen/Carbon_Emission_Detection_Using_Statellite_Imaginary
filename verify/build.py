@@ -119,6 +119,8 @@ def _trees(inputs, records, rows):
             else:
                 if model is not None and not pd.isna(row.get("ndvi_p10")):
                     prob = float(c07.classify(model, pd.DataFrame([row]))[0])
+                    if inputs["sources"]["c07_samples"] != "real":
+                        flags.append("classifier_trained_on_synthetic")
                 elif not pd.isna(row.get("ndvi")):
                     prob, flags = (1.0 if row["ndvi"] >= 0.35 else 0.0), flags + ["threshold_fallback"]
                 else:
@@ -131,9 +133,10 @@ def _trees(inputs, records, rows):
                    "invalid": "Impossible reading; no payment made on it."}[status]
             records.append(make_record("tree_pass", codes, msg, plot_id=p["plot_id"], period=str(row["date"]),
                                        pass_status=status, data_flags=sorted(set(flags)), **pay))
-            rows.append({"plot_id": p["plot_id"], "farmer": p["farmer"], "date": row["date"], "ndvi": row.get("ndvi"),
+            rows.append({"plot_id": p["plot_id"], "farmer_name": p["farmer"], "date": row["date"], "ndvi": row.get("ndvi"),
                          "cloud": row.get("cloud"), "status": status, "reason_codes": ";".join(codes),
-                         "trees": p["trees_planted"], **pay, "data_flags": ";".join(sorted(set(flags)))})
+                         "trees": p["trees_planted"], "released": pay["released"], "farmer_pkr": pay["farmer"],
+                         "financier_pkr": pay["financier"], "held": pay["held"], "data_flags": ";".join(sorted(set(flags)))})
             if status in ("verified", "failed", "invalid"):
                 latest[p["plot_id"]] = status
     return trees.verified_trees(plots, latest)

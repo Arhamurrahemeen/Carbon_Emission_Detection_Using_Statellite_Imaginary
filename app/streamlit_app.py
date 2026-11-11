@@ -154,9 +154,8 @@ elif page == "Tree contracts":
     c2.metric("Held: trees not seen (PKR)", f"{t['held'].sum():,.0f}")
     c3.metric("Trees on satellite-verified plots", f"{M['verified_trees']:,}")
     st.caption("Farmers are invented for the demo. Greenness readings are real Sentinel-2 values. Prices are demo values.")
-    st.dataframe(t[["plot_id", "farmer", "date", "ndvi", "cloud", "status", "trees", "released", "farmer", "held", "data_flags"]]
-                 .loc[:, ~t[["plot_id", "farmer", "date", "ndvi", "cloud", "status", "trees", "released", "farmer", "held", "data_flags"]].columns.duplicated()],
-                 hide_index=True, use_container_width=True)
+    st.dataframe(t[["plot_id", "farmer_name", "date", "ndvi", "cloud", "status", "trees", "released", "farmer_pkr",
+                    "financier_pkr", "held", "data_flags"]], hide_index=True, use_container_width=True)
 
 # ---------------------------------------------------------------- C04
 elif page == "Reliability (C04)":

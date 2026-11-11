@@ -1,9 +1,9 @@
 request_id,timestamp,kind,status,reason_codes,message,case,case_id,expected_status,expected_code,passed
-r-0309,2026-11-11T16:33:54+00:00,guard_test,REJECTED,E_COORD_RANGE,A plant at latitude 124.5 (no such place exists),Impossible location,1,REJECTED,E_COORD_RANGE,True
-r-0310,2026-11-11T16:33:54+00:00,guard_test,REJECTED,E_WEATHER_RANGE,A weather reading of -8 m/s wind at the plant,Negative wind speed,2,REJECTED,E_WEATHER_RANGE,True
-r-0311,2026-11-11T16:33:54+00:00,guard_test,REJECTED,E_REDUCTION_OVER_100,The company claims it cut emissions by 200%,200% emissions cut,3,REJECTED,E_REDUCTION_OVER_100,True
-r-0312,2026-11-11T16:33:54+00:00,guard_test,REJECTED,E_CF_OVER_100,"Sahiwal (1,320 MW) reports 1,380 GWh in a 30-day month, a 145% capacity factor",Over 100% of capacity,4,REJECTED,E_CF_OVER_100,True
-r-0313,2026-11-11T16:33:54+00:00,guard_test,REJECTED,E_NDVI_RANGE,A tree plot reports a greenness (NDVI) of 1.8; the maximum possible is 1,Broken greenness sensor,5,REJECTED,E_NDVI_RANGE,True
-r-0314,2026-11-11T16:33:54+00:00,guard_test,LOW_CONFIDENCE,W_FEW_OBS,A valid August with only 2 cloud-free satellite passes,"Monsoon month, few clear days",6,LOW_CONFIDENCE,W_FEW_OBS,True
-r-0315,2026-11-11T16:33:54+00:00,guard_test,REJECTED,E_CLAIM_NOT_IN_SOURCE,"An extracted figure of 4,100 GWh that does not appear on the cited page",Figure not in the report,7,REJECTED,E_CLAIM_NOT_IN_SOURCE,True
-r-0316,2026-11-11T16:33:54+00:00,guard_test,OK,,"An NO2 reading of -0.00002 mol/m2, normal noise near zero",Control: normal sensor noise,8,OK,,True
+r-0309,2026-11-11T16:45:34+00:00,guard_test,REJECTED,E_COORD_RANGE,A plant at latitude 124.5 (no such place exists),Impossible location,1,REJECTED,E_COORD_RANGE,True
+r-0310,2026-11-11T16:45:34+00:00,guard_test,REJECTED,E_WEATHER_RANGE,A weather reading of -8 m/s wind at the plant,Negative wind speed,2,REJECTED,E_WEATHER_RANGE,True
+r-0311,2026-11-11T16:45:34+00:00,guard_test,REJECTED,E_REDUCTION_OVER_100,The company claims it cut emissions by 200%,200% emissions cut,3,REJECTED,E_REDUCTION_OVER_100,True
+r-0312,2026-11-11T16:45:34+00:00,guard_test,REJECTED,E_CF_OVER_100,"Sahiwal (1,320 MW) reports 1,380 GWh in a 30-day month, a 145% capacity factor",Over 100% of capacity,4,REJECTED,E_CF_OVER_100,True
+r-0313,2026-11-11T16:45:34+00:00,guard_test,REJECTED,E_NDVI_RANGE,A tree plot reports a greenness (NDVI) of 1.8; the maximum possible is 1,Broken greenness sensor,5,REJECTED,E_NDVI_RANGE,True
+r-0314,2026-11-11T16:45:34+00:00,guard_test,LOW_CONFIDENCE,W_FEW_OBS,A valid August with only 2 cloud-free satellite passes,"Monsoon month, few clear days",6,LOW_CONFIDENCE,W_FEW_OBS,True
+r-0315,2026-11-11T16:45:34+00:00,guard_test,REJECTED,E_CLAIM_NOT_IN_SOURCE,"An extracted figure of 4,100 GWh that does not appear on the cited page",Figure not in the report,7,REJECTED,E_CLAIM_NOT_IN_SOURCE,True
+r-0316,2026-11-11T16:45:34+00:00,guard_test,OK,,"An NO2 reading of -0.00002 mol/m2, normal noise near zero",Control: normal sensor noise,8,OK,,True

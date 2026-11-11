@@ -30,6 +30,9 @@ def test_build_on_empty_data_is_fully_synthetic_and_complete(tmp_path):
     assert v["status"].isin(["OK", "LOW_CONFIDENCE", "REJECTED"]).all()
     emissions = v[v["kind"] == "emissions"]
     assert emissions["data_flags"].str.contains("synthetic").all()
+    t = pd.read_csv(root / "outputs" / "tree_passes.csv")
+    assert t["farmer_name"].map(lambda s: isinstance(s, str)).all()
+    assert {"farmer_pkr", "financier_pkr", "released", "held"} <= set(t.columns)
     g = pd.read_csv(root / "outputs" / "guard_results.csv")
     assert len(g) == 8 and (g["passed"]).all()
 
