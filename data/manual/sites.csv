@@ -1,0 +1,3 @@
+site_id,name,owner,listed_parent,lat,lon,capacity_mw,ef_low,ef_high,climate_trace_id,nox_control,nox_control_date,notes
+sahiwal,Sahiwal Coal Power Plant,Huaneng Shandong Ruyi (Pakistan) Energy Pvt Ltd,,30.7142,73.2380,1320,0.80,0.95,25455252,unknown,,"Coords: Climate TRACE centroid, check on map. EF to verify: IPCC 2006 coal factor x NEPRA tariff heat rate. NOx controls to verify."
+hub,Hub site: CPHGC coal + Hub Power RFO,China Power Hub Generation Co / The Hub Power Company,The Hub Power Company Ltd (PSX: HUBC),24.9147,66.6888,2612,0.70,0.95,25455585;448261,unknown,,"Two plants ~1 km apart (1320 MW coal + 1292 MW RFO) share one plume; label = both plants' NEPRA generation. EF low end reflects the oil plant share. To verify."
