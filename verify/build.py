@@ -45,10 +45,28 @@ def _fy_sum(labels: pd.DataFrame, site_id: str, fy: str) -> float | None:
     return float(gen.sum()) if gen.notna().all() else None
 
 
-def _pollution(inputs, site, metrics, records, monthly_rows, synth_claim_recs):
+def plume_points(kept: pd.DataFrame, site: dict, months: int = 24, km: float = 10.0) -> pd.DataFrame:
+    """Downwind sampling point of each overpass in the last `months`, weighted by the plant's own enhancement.
+    Mapped together they show where the plume actually goes (the app's plume rose)."""
+    d = kept.copy()
+    d["date"] = pd.to_datetime(d["date"])
+    d = d[d["date"] >= d["date"].max() - pd.DateOffset(months=months)]
+    b = np.radians(d["wind_dir"].astype(float))
+    lat0 = float(site["lat"])
+    return pd.DataFrame({
+        "site_id": site["site_id"], "date": d["date"].dt.strftime("%Y-%m-%d"),
+        "lat": lat0 + km * np.cos(b) / 111.32,
+        "lon": float(site["lon"]) + km * np.sin(b) / (111.32 * np.cos(np.radians(lat0))),
+        "enhancement": (d["no2_down"] - d["no2_up"]).clip(lower=0),
+        "wind_speed": d["wind_speed"],
+    })
+
+
+def _pollution(inputs, site, metrics, records, monthly_rows, synth_claim_recs, plume_rows):
     sid, cap = site["site_id"], site["capacity_mw"]
     real_ov = inputs["sources"][f"overpasses_{sid}"] == "real"
     kept, rejected = clean_overpasses(inputs["overpasses"][sid])
+    plume_rows.append(plume_points(kept, site))
     feats = monthly_features(kept)
     labels, label_source = _site_labels(inputs, sid, cap, real_ov)
     data = join_labels(feats, labels, SITE_PLANTS).sort_values("month").reset_index(drop=True)
@@ -165,12 +183,12 @@ def build(root: Path) -> dict:
     assumptions = load_assumptions(inputs["assumptions_path"])
     out = root / "outputs"
     out.mkdir(exist_ok=True)
-    records, monthly_rows, synth_recs, cross_rows, tree_rows = [], [], [], [], []
+    records, monthly_rows, synth_recs, cross_rows, tree_rows, plume_rows, claim_rows = [], [], [], [], [], [], []
     pollution = {}
     verified = _trees(inputs, records, tree_rows)
 
     for site in inputs["sites"].to_dict("records"):
-        month_recs, labels = _pollution(inputs, site, pollution, records, monthly_rows, synth_recs)
+        month_recs, labels = _pollution(inputs, site, pollution, records, monthly_rows, synth_recs, plume_rows)
         lag1 = (pollution[site["site_id"]].get("annual") or {}).get("residual_lag1", 0.0)
         inflate = (1 + lag1) / (1 - lag1) if 0 < lag1 < 0.95 else 1.0
         fy = fiscal_rollup(month_recs, DEMO_FY, site, inflate=inflate)
@@ -183,6 +201,7 @@ def build(root: Path) -> dict:
         cl = inputs["claims"]
         site_claims = (cl[cl["site_id"] == site["site_id"]].to_dict("records") if cl is not None
                        else _demo_claims(site["site_id"], metered, metered_prev, site["ef_low"]))
+        claim_rows += [{"site_id": site["site_id"], **c} for c in site_claims]
         sat = lambda r: {"low": r.get("interval_low"), "high": r.get("interval_high"), "status": r["status"]} if "interval_low" in r else None
         evidence = {"nepra_gwh": metered, "nepra_prev_gwh": metered_prev, "sat": sat(fy), "sat_prev": sat(fy_prev),
                     "ef": (site["ef_low"], site["ef_high"]), "verified_trees": verified if site["site_id"] == "sahiwal" else None}
@@ -221,8 +240,10 @@ def build(root: Path) -> dict:
     _write(out, "monthly.csv", monthly_rows)
     _write(out, "verdicts.csv", records)
     _write(out, "cross_checks.csv", cross_rows)
+    _write(out, "claims_used.csv", claim_rows)
     _write(out, "tree_passes.csv", tree_rows)
     _write(out, "guard_results.csv", guard_rows)
+    pd.concat(plume_rows, ignore_index=True).to_csv(out / "plume_points.csv", index=False)
     if inputs["climate_trace"] is not None:
         inputs["climate_trace"].to_csv(out / "climate_trace.csv", index=False)
     (out / "metrics.json").write_text(json.dumps(metrics, indent=1, default=str))

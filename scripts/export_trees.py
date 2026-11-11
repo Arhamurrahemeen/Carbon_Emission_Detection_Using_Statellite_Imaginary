@@ -7,6 +7,7 @@ Network access happens only here."""
 import argparse
 import csv
 import math
+import random
 from pathlib import Path
 
 import ee
@@ -49,24 +50,42 @@ def c07_samples(dest: Path):
     label = wc.eq(10).rename("label").updateMask(wc.neq(80).And(wc.neq(95)))
     cols = FEATURES + QUARTERS
 
-    def balanced(seed, n):
+    # Step 1 (cheap): pick balanced labelled points. Step 2 (slow): sample the year of features in small batches,
+    # appended to a .partial file so an interrupted run resumes instead of starting over.
+    points = []
+    for split, seed, n in (("train_test", 7, 1200), ("hand", 99, 100)):
         pts = label.sampleRegions(collection=ee.FeatureCollection.randomPoints(region, 25000, seed), scale=10, geometries=True)
         pick = pts.filter(ee.Filter.eq("label", 1)).limit(n).merge(pts.filter(ee.Filter.eq("label", 0)).limit(n))
-        return (feats.sampleRegions(collection=pick, properties=["label"], scale=10, geometries=True, tileScale=4)
-                .filter(ee.Filter.notNull(cols)))
+        rng = random.Random(11)
+        for f in pick.getInfo()["features"]:
+            s = split if split == "hand" else ("train" if rng.random() < 0.7 else "test")
+            points.append((f["properties"]["label"], s, *f["geometry"]["coordinates"]))
+        print(f"c07 {split}: {len(points)} points picked", flush=True)
 
-    rows = []
-    for split, seed, n in (("train_test", 7, 1200), ("hand", 99, 100)):
-        fc = balanced(seed, n)
-        if split == "train_test":
-            fc = fc.randomColumn("r", 11)
-        for f in fc.getInfo()["features"]:
-            p = f["properties"]
-            lon, lat = f["geometry"]["coordinates"]
-            s = split if split == "hand" else ("train" if p["r"] < 0.7 else "test")
-            rows.append({"label": p["label"], "split": s, **{c: p[c] for c in cols}, "lon": lon, "lat": lat})
-        print(f"c07 {split}: {sum(r['split'] in (split, 'train', 'test') for r in rows)} rows so far")
-    _write(dest, ["label", "split"] + cols + ["lon", "lat"], rows)
+    partial = dest.with_suffix(".partial.csv")
+    header = ["batch", "label", "split"] + cols + ["lon", "lat"]
+    done = {int(r["batch"]) for r in csv.DictReader(partial.open())} if partial.exists() else set()
+    with partial.open("a", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=header)
+        if not done:
+            w.writeheader()
+        size = 100
+        for b in range(0, len(points), size):
+            if b // size in done:
+                continue
+            batch = points[b:b + size]
+            fc = ee.FeatureCollection([ee.Feature(ee.Geometry.Point([lon, lat]), {"label": lab, "split": s})
+                                       for lab, s, lon, lat in batch])
+            got = feats.sampleRegions(collection=fc, properties=["label", "split"], scale=10, geometries=True, tileScale=16)
+            for f in got.filter(ee.Filter.notNull(cols)).getInfo()["features"]:
+                p = f["properties"]
+                lon, lat = f["geometry"]["coordinates"]
+                w.writerow({"batch": b // size, "label": p["label"], "split": p["split"], **{c: p[c] for c in cols}, "lon": lon, "lat": lat})
+            fh.flush()
+            print(f"c07 batch {b // size + 1}/{-(-len(points) // size)} saved", flush=True)
+    rows = [{k: v for k, v in r.items() if k != "batch"} for r in csv.DictReader(partial.open())]
+    _write(dest, header[1:], rows)
+    partial.unlink()
 
 
 def plot_passes(plots_csv: Path, dest: Path):

@@ -42,6 +42,7 @@ Base palette: two neutrals plus one accent. Status colours are semantic and appe
 | `ink` | `#1D2A2F` | Body text, metered data (the trusted record is plain black ink) |
 | `ink-soft` | `#5B676C` | Secondary text, captions, axis labels |
 | **`sat`** (accent) | `#0F6B75` | **Satellite evidence only:** the estimate line, its 80% range, plume hexagons, satellite columns. Its single meaning is "what space saw" |
+| `sat-bright` | `#3FC6CF` | The accent on satellite imagery only (map layers), where `sat` is too dark to see |
 | `sat-tint` | `#0F6B7526` | The 80% range band (accent at 15% opacity) |
 | `flag` | `#B3261E` | INCONSISTENT, CONTRADICT, REJECTED, the company's disputed claim marker |
 | `warn` | `#A15C00` | LOW_CONFIDENCE, CANNOT_VERIFY |
@@ -79,7 +80,7 @@ No all-caps labels with wide tracking. Sentence case everywhere.
 
 **Claim rows** (C12): one row per cross-check, in plain words. Left: what was compared ("Company's table vs the electricity meter"). Middle: the two values. Right: result word with its colour. No raw codes on this view.
 
-**3D map** (pydeck, light Carto basemap, pitch 50°):
+**3D map** (pydeck, pitch 50°). **Basemap: real satellite imagery**, the EOX *Sentinel-2 cloudless* mosaic (the same satellite family as our tree check; free with attribution, CC BY-NC-SA 4.0, fine for this non-commercial demo), draped on AWS Terrain Tiles. A toggle switches to a plain light map (Carto) for projectors that wash out imagery. On imagery the accent is drawn as `sat-bright` `#3FC6CF` so it holds 3:1 against dark fields; on the light map it stays `sat`. *Trade-off:* map tiles need internet; every number, chart and verdict works offline.
 - *Plant view:* a teal column for the satellite CO2 estimate and a grey column beside it for Climate TRACE, both scaled to the same tonnes. Teal hexagons, extruded by summed plume strength, at the downwind point of each real overpass over the last 24 months. Together they form a "plume rose" showing where the pollution really goes.
 - *Contracts view:* camera pulls out to show the plant and its tree plots, with an arc from the plant to each plot. Plot columns are green (trees seen alive) or grey (no trees seen), with height set by trees contracted.
 - Tooltips in plain words. A caption under the map says what height and colour mean.

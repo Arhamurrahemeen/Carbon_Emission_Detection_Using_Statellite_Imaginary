@@ -12,3 +12,4 @@ Thumbs.db
 data/raw/nepra/*.pdf
 data/raw/nepra/pages/
 .pytest_tmp/
+data/raw/*.partial.csv

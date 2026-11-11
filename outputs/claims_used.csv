@@ -1,0 +1,11 @@
+site_id,entry_mode,source_page,data_flags,period,claim_type,value,modality,raw_text,source_quote
+sahiwal,synthetic,,synthetic,FY2026,generation,4603.0,table,"4,603","Table: Net generation FY2026: 4,603 GWh (synthetic)"
+sahiwal,synthetic,,synthetic,FY2026,generation,4787.0,text,"4,787",Narrative: the plant delivered about the same energy as the table states (synthetic)
+sahiwal,synthetic,,synthetic,FY2026,co2_total,3682400.0,table,,Table: Scope 1 emissions (synthetic)
+sahiwal,synthetic,,synthetic,FY2026,trees_planted,50000.0,text,"50,000","Narrative: we planted 50,000 trees across Sindh (synthetic)"
+sahiwal,synthetic,,synthetic,FY2026,reduction_pct,25.0,text,25%,Narrative: we reduced our carbon emissions by 25% compared to FY2025 (synthetic)
+hub,synthetic,,synthetic,FY2026,generation,879.0,table,879,Table: Net generation FY2026: 879 GWh (synthetic)
+hub,synthetic,,synthetic,FY2026,generation,914.0,text,914,Narrative: the plant delivered about the same energy as the table states (synthetic)
+hub,synthetic,,synthetic,FY2026,co2_total,615300.0,table,,Table: Scope 1 emissions (synthetic)
+hub,synthetic,,synthetic,FY2026,trees_planted,50000.0,text,"50,000","Narrative: we planted 50,000 trees across Sindh (synthetic)"
+hub,synthetic,,synthetic,FY2026,reduction_pct,25.0,text,25%,Narrative: we reduced our carbon emissions by 25% compared to FY2025 (synthetic)
