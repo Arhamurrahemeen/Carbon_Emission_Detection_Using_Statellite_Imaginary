@@ -16,7 +16,7 @@ Needs Python 3.11+.
 
 ```bash
 pip install -r requirements.txt
-streamlit run app/streamlit_app.py     # opens the app on the committed results
+streamlit run app/streamlit_app.py     # opens the app on the committed results (the satellite map needs internet for imagery tiles)
 ```
 
 To rebuild every number from the data, or run the tests:
@@ -71,6 +71,7 @@ Sources, licences and download dates: [evidence_pack.md](evidence_pack.md).
 - [Challenges C04, C07, C12](docs/CHALLENGES.md)
 - [Pitch brief and jury Q&A](docs/PITCH_BRIEF.md)
 - [Glossary: every term in plain words](docs/GLOSSARY.md)
+- [App design contract](DESIGN.md)
 
 ## Team
 
