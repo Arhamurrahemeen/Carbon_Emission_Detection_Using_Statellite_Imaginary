@@ -9,3 +9,5 @@ venv/
 data/raw/reports/*.pdf
 .DS_Store
 Thumbs.db
+data/raw/nepra/*.pdf
+data/raw/nepra/pages/
