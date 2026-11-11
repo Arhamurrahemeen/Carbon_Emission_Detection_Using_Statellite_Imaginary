@@ -1,0 +1,99 @@
+{
+ "pollution": {
+  "sahiwal": {
+   "n_train": 87,
+   "n_test": 12,
+   "test_months": [
+    "2025-10",
+    "2026-09"
+   ],
+   "rmse": 54.91611619770939,
+   "mae": 44.15101910616094,
+   "mape_nonzero": 16.67080319377131,
+   "r": 0.9716249083511609,
+   "coverage_80": 0.8333333333333334,
+   "q80_gwh": 68.78830926525656,
+   "baselines": {
+    "capacity_heuristic": {
+     "rmse": 282.506131953505
+    },
+    "raw_no2_linear": {
+     "rmse": 174.884477192604
+    },
+    "moving_avg_3_reference": {
+     "rmse": 176.82958298071406
+    }
+   },
+   "gain_vs_capacity_pct": 80.6,
+   "gain_vs_raw_pct": 68.6,
+   "label_source": "synthetic",
+   "overpasses_rejected": 0
+  },
+  "hub": {
+   "n_train": 87,
+   "n_test": 12,
+   "test_months": [
+    "2025-10",
+    "2026-09"
+   ],
+   "rmse": 75.17942306662928,
+   "mae": 65.80752271549697,
+   "mape_nonzero": 10.723474630643347,
+   "r": 0.9900124320756413,
+   "coverage_80": 0.75,
+   "q80_gwh": 100.192168892629,
+   "baselines": {
+    "capacity_heuristic": {
+     "rmse": 616.851788428542
+    },
+    "raw_no2_linear": {
+     "rmse": 258.9597388054051
+    },
+    "moving_avg_3_reference": {
+     "rmse": 386.34491842382096
+    }
+   },
+   "gain_vs_capacity_pct": 87.8,
+   "gain_vs_raw_pct": 71.0,
+   "label_source": "synthetic",
+   "overpasses_rejected": 0
+  }
+ },
+ "trees": {
+  "test": {
+   "n": 180,
+   "rf_f1": 1.0,
+   "baseline_tuned_f1": 0.8894407480757602,
+   "baseline_threshold": 0.25,
+   "baseline_fixed_f1": 0.8894407480757602,
+   "gain_vs_tuned_pct": 12.4,
+   "gain_vs_fixed_pct": 12.4
+  },
+  "hand": null,
+  "n_train": 420,
+  "n_test": 180,
+  "answer_key": "ESA WorldCover v200 tree class + team hand labels"
+ },
+ "claims": {
+  "detection_rate": 0.9791666666666666,
+  "false_alarm_rate": 0.125,
+  "n_misstated": 48,
+  "n_true": 16,
+  "by_scale": {
+   "0.4": 1.0,
+   "0.6": 1.0,
+   "0.8": 0.9375
+  }
+ },
+ "verified_trees": 2200,
+ "sources": {
+  "overpasses_sahiwal": "synthetic",
+  "overpasses_hub": "synthetic",
+  "labels_file": "real",
+  "plot_passes": "shajar_export",
+  "c07_samples": "synthetic",
+  "claims": "synthetic",
+  "labels": "synthetic"
+ },
+ "built_at": "2026-11-11T16:10:44+00:00"
+}

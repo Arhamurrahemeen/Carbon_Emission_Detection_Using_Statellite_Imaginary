@@ -27,6 +27,8 @@ RULES = {
     "tree_prob": 0.5,
     "interval_level": 0.80,
     "fy_low_conf_max": 3,              # more low-confidence months than this in a fiscal year -> low confidence
+    # C07 pollution baseline: imported-coal fleet utilisation, NEPRA PER Generation FY2024-25 (22.9%)
+    "fleet_pf_imported_coal": 0.229,
     # Cross-checks (C12)
     "nepra_match_tol": 0.05,
     "tree_claim_tol": 0.10,

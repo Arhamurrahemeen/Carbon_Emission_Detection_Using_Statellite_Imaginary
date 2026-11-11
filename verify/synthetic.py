@@ -57,3 +57,39 @@ def make_overpasses(site_id: str, months: list[str], seed: int = 0) -> pd.DataFr
                 "data_flags": "synthetic",
             })
     return pd.DataFrame(rows)
+
+
+# Real Sentinel-2 NDVI for the Shajar demo plots (Earth Engine export by the Shajar team, 2026-11-11).
+# Used until gee/plots_export.js output lands. No classifier features, so the build falls back to the NDVI
+# threshold and flags those passes "threshold_fallback".
+SHAJAR_NDVI = {
+    "m1": [0.43, 0.405, 0.486, 0.49], "m2": [0.666, 0.632, 0.741, 0.633],
+    "s1": [0.186, 0.143, 0.0889, 0.104], "s2": [0.233, 0.173, 0.142, 0.151],
+    "s3": [0.592, 0.203, 0.308, 0.29], "s4": [0.0603, 0.0395, 0.0246, 0.0414],
+}
+SHAJAR_DATES = ["2026-02-10", "2026-05-12", "2026-08-10", "2026-11-03"]
+
+
+def shajar_plot_passes() -> pd.DataFrame:
+    rows = [{"plot_id": p, "date": d, "ndvi": v, "cloud": 0.0, "data_flags": "shajar_export"}
+            for p, vals in SHAJAR_NDVI.items() for d, v in zip(SHAJAR_DATES, vals)]
+    rows += [{"plot_id": p, "date": "2027-02-10", "ndvi": None, "cloud": None, "data_flags": "shajar_export"} for p in SHAJAR_NDVI]
+    return pd.DataFrame(rows)
+
+
+def make_c07_samples(n: int = 600, seed: int = 0) -> pd.DataFrame:
+    """Synthetic tree / not-tree samples: trees stay green all year; crops are green in one quarter only."""
+    from verify.c07 import TREE_FEATURES
+    rng = np.random.default_rng(seed)
+    rows = []
+    for i in range(n):
+        tree = i % 2 == 0
+        crop_q = rng.integers(0, 4)
+        q = [rng.uniform(0.45, 0.7) if tree else (rng.uniform(0.5, 0.8) if k == crop_q else rng.uniform(0.1, 0.25)) for k in range(4)]
+        row = {f: rng.normal(0.2, 0.05) for f in TREE_FEATURES}
+        row.update({"label": int(tree), "ndvi_p10": rng.uniform(0.35, 0.5) if tree else rng.uniform(0.05, 0.2),
+                    "mean": float(np.mean(q)), "q1": q[0], "q2": q[1], "q3": q[2], "q4": q[3],
+                    "split": "train" if i < int(n * 0.7) else "test", "lon": 67 + i * 1e-3, "lat": 25.0,
+                    "data_flags": "synthetic"})
+        rows.append(row)
+    return pd.DataFrame(rows)
