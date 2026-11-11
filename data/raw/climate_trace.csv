@@ -1,0 +1,10 @@
+site_id,asset_id,asset_name,asset_type,year,emissions_t_co2e,activity_mwh,emissions_factor,confidence_total,confidence_capacity_factor,fetched_at
+hub,25455585,Hubco power station,coal,2023,3743800,4035900,0.9276245694888376,medium,low,2026-11-11
+hub,448261,Hub power plant,oil,2023,2947500,3304900,0.8918575448576357,medium,low,2026-11-11
+sahiwal,25455252,Sahiwal power station,coal,2023,2687400,2949000,0.911291963377416,medium,medium,2026-11-11
+hub,25455585,Hubco power station,coal,2024,3548500,3824900,0.9277366728541923,medium,low,2026-11-11
+sahiwal,25455252,Sahiwal power station,coal,2024,3343800,3669500,0.9112413135304538,medium,medium,2026-11-11
+hub,448261,Hub power plant,oil,2024,2822900,3165300,0.89182699902063,medium,low,2026-11-11
+sahiwal,25455252,Sahiwal power station,coal,2025,4182600,4589900,0.9112616832610733,medium,medium,2026-11-11
+hub,25455585,Hubco power station,coal,2025,3540200,3816000,0.9277253668763102,medium,low,2026-11-11
+hub,448261,Hub power plant,oil,2025,2816300,3157900,0.891826846955255,medium,low,2026-11-11
