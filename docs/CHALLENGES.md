@@ -83,7 +83,7 @@ Correlation on held-out months r = 0.45; across all 27 labelled months, the mont
 
 **Evidence.**
 - *Detection test:* 16 rolling 12-month windows of leave-one-out estimates (each month predicted by a model that never saw it), with true and understated claims built from metered numbers. Understated by 20%: caught in 94% of windows. By 40% or 60%: 100%. False alarms on true claims: 0%. The windows overlap, so they are not 16 independent tests.
-- *FY2026 Sahiwal:* satellite estimate 5,982 GWh (80% range 4,804–7,187), metered 6,138 GWh. The two agree.
+- *FY2026 Sahiwal:* satellite estimate 5,896 GWh (80% range 4,967–6,833), each month predicted by a model that never saw it; metered 6,138 GWh, so 3.9% low. Across 16 rolling years the annual error averages 7.3% (worst 20.2%); a strict forward-only test over the last 15 months is 15.4% low. An earlier draft quoted 5,982 GWh from a model that had seen those months; that figure was withdrawn.
 - *Demo company claim (synthetic, labelled):* table says 4,603 GWh (25% under the meter). X1 metered and X2 satellite both disagree; the satellite catches it with no access to the meter. The narrative "we cut emissions by 25%" contradicts a metered rise of 44%. "50,000 trees planted" contradicts 2,200 trees on plots the satellite confirms alive.
 - *Climate TRACE vs metered, calendar 2025:* CPHGC 3,816 vs ~702 GWh (5.4×); Hub Power oil plant 3,158 vs ~0 GWh. A modelled inventory is no substitute for a check against real data.
 

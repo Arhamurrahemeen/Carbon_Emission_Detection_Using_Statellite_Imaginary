@@ -37,6 +37,17 @@ def test_build_on_empty_data_is_fully_synthetic_and_complete(tmp_path):
     assert len(g) == 8 and (g["passed"]).all()
 
 
+def test_labelled_month_estimates_are_out_of_sample(tmp_path):
+    """A month's shown estimate must come from a model that never saw that month's answer."""
+    root = _fresh_root(tmp_path)
+    build(root)
+    m = pd.read_csv(root / "outputs" / "monthly.csv")
+    lab = m[(m.site_id == "sahiwal") & m.generation_gwh.notna()]
+    assert lab["estimate_source"].eq("leave_one_out").all()
+    unl = m[m.generation_gwh.isna()]
+    assert unl["estimate_source"].eq("full_model").all()
+
+
 def test_claim_detection_rates():
     recs = [
         {"kind": "emissions", "status": "OK", "verdict": "INCONSISTENT", "claim_scale": 0.6},

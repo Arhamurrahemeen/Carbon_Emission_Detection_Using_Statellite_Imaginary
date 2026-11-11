@@ -13,7 +13,7 @@ from verify import c07, claims as claims_mod, trees
 from verify.features import clean_overpasses, monthly_features
 from verify.gate import GUARD_CASES, check_tree_density
 from verify.io import SATELLITE_MONTHS, load_inputs
-from verify.model import evaluate, fit, join_labels, predict, window_detection
+from verify.model import evaluate, fit, join_labels, loo_predictions, predict, window_detection
 from verify.records import make_record
 from verify.rules import RULES, SITE_PLANTS
 from verify.synthetic import make_nepra
@@ -63,6 +63,14 @@ def _pollution(inputs, site, metrics, records, monthly_rows, synth_claim_recs):
     metrics[sid]["annual"] = annual
     model = fit(lab)
     pred = predict(model, data)
+    pred["estimate_source"] = "full_model"
+    # Months with a known answer show a leave-one-out estimate, so no shown number was fitted to its own answer.
+    loo, q80_loo, _ = loo_predictions(lab)
+    idx = lab.sort_values("month").index
+    pred.loc[idx, "estimate_gwh"] = loo
+    pred.loc[idx, "interval_low"] = np.clip(loo - q80_loo, 0, None)
+    pred.loc[idx, "interval_high"] = loo + q80_loo
+    pred.loc[idx, "estimate_source"] = "leave_one_out"
     month_recs = []
     for row, p in zip(data.to_dict("records"), pred.to_dict("records")):
         rec = emissions_record(site, row, p, None, model)

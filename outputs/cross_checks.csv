@@ -1,21 +1,21 @@
 site_id,period,pair,left,right,result,reason
 sahiwal,FY2026,X1,"table claim 4,603 GWh","metered 6,138 GWh",CONTRADICT,Differs from metered generation by 25.0% (tolerance 5%).
-sahiwal,FY2026,X2,"table claim 4,603 GWh","satellite 4,804-7,187 GWh",CONTRADICT,Compared with the satellite 80% range.
+sahiwal,FY2026,X2,"table claim 4,603 GWh","satellite 4,967-6,833 GWh",CONTRADICT,Compared with the satellite 80% range.
 sahiwal,FY2026,X1,"text claim 4,787 GWh","metered 6,138 GWh",CONTRADICT,Differs from metered generation by 22.0% (tolerance 5%).
-sahiwal,FY2026,X2,"text claim 4,787 GWh","satellite 4,804-7,187 GWh",CONTRADICT,Compared with the satellite 80% range.
+sahiwal,FY2026,X2,"text claim 4,787 GWh","satellite 4,967-6,833 GWh",CONTRADICT,Compared with the satellite 80% range.
 sahiwal,FY2026,X3,"table claim 3,682,400 t","metered x factor 4,910,304-5,830,986 t",CONTRADICT,Compared with metered generation x emission factor range.
-sahiwal,FY2026,X4,"table claim 3,682,400 t","satellite CO2 3,842,880-6,827,365 t",CONTRADICT,"Compared with the satellite-derived CO2 range (derived, not measured)."
+sahiwal,FY2026,X4,"table claim 3,682,400 t","satellite CO2 3,973,760-6,491,350 t",CONTRADICT,"Compared with the satellite-derived CO2 range (derived, not measured)."
 sahiwal,FY2026,X6,"text claim 50,000 trees","satellite-verified 2,200 trees",CONTRADICT,Trees on plots whose latest satellite check passed (tolerance 10%).
 sahiwal,FY2026,X5,text: cut of 25%,metered change +44.2%,CONTRADICT,Emissions follow coal burned; metered generation should fall by at least half the claimed cut.
-sahiwal,FY2026,X5,text: cut of 25%,satellite change -19% to +98%,CONTRADICT,Claimed change compared with the satellite year-on-year range.
+sahiwal,FY2026,X5,text: cut of 25%,satellite change -14% to +73%,CONTRADICT,Claimed change compared with the satellite year-on-year range.
 sahiwal,FY2026,X7,"table 4,603","narrative 4,787",CONTRADICT,The same figure stated twice in the report should match.
 hub,FY2026,X1,table claim 879 GWh,"metered 1,172 GWh",CONTRADICT,Differs from metered generation by 25.0% (tolerance 5%).
-hub,FY2026,X2,table claim 879 GWh,"satellite 685-2,227 GWh",AGREE,Compared with the satellite 80% range.
+hub,FY2026,X2,table claim 879 GWh,"satellite 700-2,060 GWh",AGREE,Compared with the satellite 80% range.
 hub,FY2026,X1,text claim 914 GWh,"metered 1,172 GWh",CONTRADICT,Differs from metered generation by 22.0% (tolerance 5%).
-hub,FY2026,X2,text claim 914 GWh,"satellite 685-2,227 GWh",AGREE,Compared with the satellite 80% range.
+hub,FY2026,X2,text claim 914 GWh,"satellite 700-2,060 GWh",AGREE,Compared with the satellite 80% range.
 hub,FY2026,X3,"table claim 615,300 t","metered x factor 820,174-1,113,093 t",CONTRADICT,Compared with metered generation x emission factor range.
-hub,FY2026,X4,"table claim 615,300 t","satellite CO2 479,640-2,115,650 t",AGREE,"Compared with the satellite-derived CO2 range (derived, not measured)."
+hub,FY2026,X4,"table claim 615,300 t","satellite CO2 490,350-1,957,475 t",AGREE,"Compared with the satellite-derived CO2 range (derived, not measured)."
 hub,FY2026,X6,"text claim 50,000 trees",verified trees,CANNOT_COMPARE,No tree plots linked to this company.
 hub,FY2026,X5,text: cut of 25%,metered change +70.6%,CONTRADICT,Emissions follow coal burned; metered generation should fall by at least half the claimed cut.
-hub,FY2026,X5,text: cut of 25%,satellite change -68% to +265%,AGREE,Claimed change compared with the satellite year-on-year range.
+hub,FY2026,X5,text: cut of 25%,satellite change -65% to +232%,AGREE,Claimed change compared with the satellite year-on-year range.
 hub,FY2026,X7,table 879,narrative 914,CONTRADICT,The same figure stated twice in the report should match.
