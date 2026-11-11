@@ -78,6 +78,7 @@ Sources, licences and download dates: [evidence_pack.md](evidence_pack.md).
 - [Challenges C04, C07, C12](docs/CHALLENGES.md)
 - [Pitch brief and jury Q&A](docs/PITCH_BRIEF.md)
 - [Glossary: every term in plain words](docs/GLOSSARY.md)
+- [Discussion log: every question we settled](docs/DISCUSSION_LOG.md)
 - [App design contract](DESIGN.md)
 
 ## Team
