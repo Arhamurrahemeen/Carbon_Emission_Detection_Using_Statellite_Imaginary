@@ -198,6 +198,13 @@ elif page == "Model vs baseline (C07)":
             {"model": "3-month moving average of reported data (reference only)", "RMSE": round(p["baselines"]["moving_avg_3_reference"]["rmse"], 1), "gain %": ""},
         ]), hide_index=True)
         st.caption(f"Correlation {p['r']:.2f} · {p['coverage_80'] * 100:.0f}% of test months inside the 80% range")
+        a = p.get("annual")
+        if a:
+            st.markdown(f"**Annual claims** ({a['n_windows']} rolling 12-month windows, each month predicted by a model that never saw it, "
+                        f"±{a['half_width_gwh']:,.0f} GWh): understated claims caught "
+                        + ", ".join(f"{int(round((1 - float(s)) * 100))}% low → {v * 100:.0f}%" for s, v in a["by_scale"].items())
+                        + f" · false alarms on true claims {a['false_alarm_rate'] * 100:.0f}%")
+            st.caption("Windows overlap, so they are not independent tests. Single months are too noisy for a verdict and abstain.")
     st.caption("The moving average uses the company-reported numbers we are trying to check, so it is shown for honesty, not as a baseline.")
 
 # ---------------------------------------------------------------- Log
