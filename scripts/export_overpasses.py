@@ -60,7 +60,9 @@ def _rows(site_id, lat, lon, start, end):
         })
 
     col = (ee.ImageCollection("COPERNICUS/S5P/OFFL/L3_NO2")
-           .filterBounds(pt.buffer(60000).bounds()).filterDate(start, end).map(per_image)
+           .filterBounds(pt.buffer(60000).bounds()).filterDate(start, end)
+           .filter(ee.Filter.calendarRange(5, 10, "hour"))  # Pakistan overpass ~06-09 UTC; other orbits have no pixels here
+           .map(per_image)
            .filter(ee.Filter.notNull(["no2_raw", "no2_down", "no2_up"]))
            .filter(ee.Filter.gt("wind_u", -9000)))
     return [f["properties"] for f in col.getInfo()["features"]]
@@ -76,7 +78,7 @@ def _half_years(start: date, end: date):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--project", default="shajar-514406")
+    ap.add_argument("--project", default="gen-lang-client-0940311971")
     ap.add_argument("--start", default="2018-07-01")
     ap.add_argument("--sites", nargs="+", default=list(SITES))
     args = ap.parse_args()

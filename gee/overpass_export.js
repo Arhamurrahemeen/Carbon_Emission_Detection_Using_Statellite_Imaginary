@@ -38,7 +38,9 @@ function meanIn(img, band, geom) {
 function rowsFor(site) {
   var pt = ee.Geometry.Point([site.lon, site.lat]);
   var box = pt.buffer(60000).bounds();
-  return s5p.filterBounds(box).filterDate(START, END).map(function (img) {
+  return s5p.filterBounds(box).filterDate(START, END)
+    .filter(ee.Filter.calendarRange(5, 10, 'hour'))  // Pakistan overpass ~06-09 UTC; other orbits have no pixels here
+    .map(function (img) {
     var t = img.date();
     var hour = ee.Date(t.millis().divide(3600000).round().multiply(3600000));
     var w = era.filterDate(hour, hour.advance(1, 'hour'));
