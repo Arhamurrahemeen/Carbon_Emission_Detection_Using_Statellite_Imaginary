@@ -45,7 +45,8 @@ function passRow(p, dateStr) {
     .linkCollection(cloudScore, ['cs'])
     .map(function (img) {
       var clear = img.select('cs').gte(0.6);
-      var cloud = ee.Number(1).subtract(clear.reduceRegion(ee.Reducer.mean(), geom, 10).get('cs'));
+      var cs = clear.reduceRegion(ee.Reducer.mean(), geom, 10).get('cs');
+      var cloud = ee.Number(ee.Algorithms.If(cs, ee.Number(1).subtract(cs), 1)); // no clear-sky pixels = fully cloudy
       var ndvi = img.normalizedDifference(['B8', 'B4']).updateMask(clear).reduceRegion(ee.Reducer.mean(), geom, 10).get('nd');
       return img.set({ cloud: cloud, ndvi: ndvi });
     }).sort('cloud');

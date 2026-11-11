@@ -82,7 +82,8 @@ def plot_passes(plots_csv: Path, dest: Path):
 
             def score(img):
                 clear = img.select("cs").gte(0.6)
-                cloud = ee.Number(1).subtract(clear.reduceRegion(ee.Reducer.mean(), geom, 10).get("cs"))
+                cs = clear.reduceRegion(ee.Reducer.mean(), geom, 10).get("cs")
+                cloud = ee.Number(ee.Algorithms.If(cs, ee.Number(1).subtract(cs), 1))  # no clear-sky pixels = fully cloudy
                 ndvi = img.normalizedDifference(["B8", "B4"]).updateMask(clear).reduceRegion(ee.Reducer.mean(), geom, 10).get("nd")
                 return img.set({"cloud": cloud, "ndvi": ndvi})
 
