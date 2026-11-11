@@ -153,7 +153,7 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 16. **Isn't tree offsetting greenwashing itself?** That's why we check it. We never say net zero. Emissions and trees are shown separately, and trees only count while the satellite shows them alive.
 17. **How do you know it's *your* trees and not existing forest?** Each plot gets a baseline before the contract. Plots already covered in trees score low on our plot ranking, because new trees must add something.
 18. **What about permanence? Trees can be cut later.** Payment is spread over years and stops the moment the trees disappear. We never sell a one-time permanent credit.
-19. **Can a farmer fake it with crops?** A single photo can be fooled by a green crop. Our C07 check uses a year of photos to tell trees from seasonal crops.
+19. **Can a farmer fake it with crops?** A single photo can be fooled by a green crop, so the tree check looks at a whole year of Sentinel-2 images. On 575 real test points it scores F1 0.89 against 0.80 for one greenness threshold. That's an 11.6% gain, short of the 15% C07 asks for, and we say so: a good threshold gets most of the way, and the forest adds a modest but real edge.
 
 **Legal and ethics**
 
@@ -189,5 +189,5 @@ Full write-up: `docs/CHALLENGES.md`.
 - [ ] NOx control equipment and dates at Sahiwal and Hub
 - [x] Fill in accuracy numbers in question 8 after the first test
 - [x] Climate TRACE reporting year confirmed (2025, asset 25455585)
-- [ ] Rerun C07 tree benchmark on real WorldCover samples
+- [x] C07 tree benchmark on real WorldCover samples: 11.6% gain, short of 15%. Say it as an honest gap; C07 is met by the emissions model
 - Correction: there was no Sahiwal outage in Jan 2026 (metered 628 GWh). Near-zero months were Nov 2024, Feb 2025 and Oct 2025.

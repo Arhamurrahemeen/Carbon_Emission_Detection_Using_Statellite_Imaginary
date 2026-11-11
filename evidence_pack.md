@@ -14,7 +14,7 @@ Every dataset the results depend on: where it came from, when, under what licenc
 | Plant locations | Climate TRACE asset centroids | 2026-11-11 | CC-BY 4.0 | None. To check on a map | Real |
 | Emission factor range | 0.80–0.95 t CO2/MWh (Hub 0.70–0.95 for the oil plant share) | — | — | Climate TRACE's own factors (0.911 Sahiwal, 0.928 CPHGC) sit inside the range. Still to source from IPCC 2006 + NEPRA tariff heat rate | Assumption |
 | Tree plot greenness | Sentinel-2 NDVI exported by the Shajar team (Earth Engine, 2026-11-11) | 2026-11-11 | Copernicus | None | Real readings, invented plots |
-| C07 tree samples | ESA WorldCover v200 (2021) labels + Sentinel-2 features (`gee/c07_tree_samples.js`) | pending | CC-BY 4.0 (WorldCover) | Balanced sample, water and mangroves excluded | Synthetic until exported |
+| C07 tree samples | ESA WorldCover v200 (2021) labels + Sentinel-2 2021 features via Earth Engine (`scripts/export_trees.py`) | 2026-11-12 | CC-BY 4.0 (WorldCover) | 2,160 points, water and mangroves excluded; split 1,385 train / 575 test / 200 for hand labelling | Real |
 | Carbon prices, FX, fees | `data/manual/assumptions.csv` | — | — | — | Demo assumptions, each labelled |
 
 ## Synthetic and mocked parts
@@ -22,7 +22,7 @@ Every dataset the results depend on: where it came from, when, under what licenc
 - **Company claims** for FY2026 (generation, CO2, trees, "25% reduction"): synthetic, built from real metered numbers (generation understated by 25%). No real company figure was found in a public report yet.
 - **Detection test claims:** real held-out months with the claim scaled by 0.8 / 0.6 / 0.4 (misstated) and 1.0 (true).
 - **Farmers, plots, prices:** invented (`invented_farmer` flag). Greenness readings are real Sentinel-2 values at those coordinates.
-- **Tree pass decisions** use the NDVI 0.35 threshold (`threshold_fallback` flag) until the plot export with classifier features lands.
+- **Tree pass decisions** use the random forest trained on the real WorldCover samples.
 - **NO2 overpasses:** synthetic until the export finishes. When synthetic, the model also trains on synthetic labels (never synthetic NO2 against real labels) and every record is flagged.
 
 ## Corrections we found in our own sources

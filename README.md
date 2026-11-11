@@ -47,6 +47,7 @@ python scripts/fetch_climate_trace.py                             # Climate TRAC
 | FY2026, each month predicted by a model that never saw it | 5,896 GWh (range 4,967–6,833) vs metered 6,138: 3.9% low |
 | Annual error over 16 rolling years (same method) | 7.3% on average, worst 20.2% |
 | Strict forward test (train on the past only, last 15 months) | total 15.4% low; single months about 23% off |
+| Tree classifier (second C07 test, 575 real test points) | F1 0.891 vs 0.798 for one greenness threshold: 11.6% gain, short of 15% |
 | **C04** guard cases | 8 of 8 pass |
 
 Single months are too noisy for a verdict and abstain; verdicts are given per fiscal year, which is what companies disclose. At the Hub site (a mostly idle coastal plant), the signal is weak; we state that as a limit. Full write-up: [docs/CHALLENGES.md](docs/CHALLENGES.md).
@@ -57,8 +58,9 @@ Single months are too noisy for a verdict and abstain; verdicts are given per fi
 |---|---|
 | Sentinel-5P NO2 and ERA5 wind, Jul 2018 – Nov 2026 | Company claims (no public report figure found; built from real metered numbers) |
 | Monthly plant generation, Jul 2024 – Sep 2026 (CPPA-G) | Farmers, plots and prices |
-| Climate TRACE benchmark | C07 tree samples, until the WorldCover export is rerun |
+| Climate TRACE benchmark | |
 | Sentinel-2 readings on the tree plots | |
+| C07 tree samples (WorldCover labels + Sentinel-2) | |
 
 Sources, licences and download dates: [evidence_pack.md](evidence_pack.md).
 

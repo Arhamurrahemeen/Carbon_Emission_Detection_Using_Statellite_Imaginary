@@ -89,17 +89,17 @@
  },
  "trees": {
   "test": {
-   "n": 180,
-   "rf_f1": 1.0,
-   "baseline_tuned_f1": 0.8894407480757602,
-   "baseline_threshold": 0.25,
-   "baseline_fixed_f1": 0.8894407480757602,
-   "gain_vs_tuned_pct": 12.4,
-   "gain_vs_fixed_pct": 12.4
+   "n": 575,
+   "rf_f1": 0.8907563025210085,
+   "baseline_tuned_f1": 0.7979602077226966,
+   "baseline_threshold": 0.31,
+   "baseline_fixed_f1": 0.7808151457847954,
+   "gain_vs_tuned_pct": 11.6,
+   "gain_vs_fixed_pct": 14.1
   },
   "hand": null,
-  "n_train": 420,
-  "n_test": 180,
+  "n_train": 1385,
+  "n_test": 575,
   "answer_key": "ESA WorldCover v200 tree class + team hand labels"
  },
  "claims": {
@@ -115,9 +115,9 @@
   "overpasses_hub": "real",
   "labels_file": "real",
   "plot_passes": "real",
-  "c07_samples": "synthetic",
+  "c07_samples": "real",
   "claims": "synthetic",
   "labels": "real"
  },
- "built_at": "2026-11-11T18:24:48+00:00"
+ "built_at": "2026-11-11T18:40:51+00:00"
 }

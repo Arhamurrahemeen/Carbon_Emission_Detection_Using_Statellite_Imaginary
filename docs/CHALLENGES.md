@@ -65,7 +65,7 @@ All 8 pass in `tests/test_guard.py` and as buttons in the app. On real data, the
 
 Correlation on held-out months r = 0.45; across all 27 labelled months, the monthly plume correlates with metered generation at r = 0.62 (raw NO2: 0.53). 78% of held-out months fall inside the 80% interval.
 
-**Tree classifier (second C07 entry):** random forest on a year of Sentinel-2 vs a single NDVI threshold. Currently scored on **synthetic** samples (F1 1.000 vs 0.889, +12.4%), because the real WorldCover sample export had not finished at build time. Not claimed until rerun on real samples.
+**Tree classifier (second C07 entry), real data:** random forest on a year of Sentinel-2 vs a single NDVI threshold, 1,385 training and 575 test points in lower Sindh, labels from ESA WorldCover 2021. F1 on the test points: random forest **0.891**, best single threshold 0.798, the fixed 0.35 threshold 0.781. Gain **11.6%** over the tuned threshold and **14.1%** over the fixed one: **short of the 15% bar.** Adding the four seasonal greenness values improved training-set cross-validation only from 0.881 to 0.887, so we did not keep tuning towards the bar. Honest reading: for spotting trees, a well-chosen threshold gets most of the way; the forest's edge is real but modest. C07 is met by the emissions model, not by this one. WorldCover is itself a Sentinel-2 model, and the team's own hand labels were not collected, so this is scored against another model's labels.
 
 **Trade-offs and gaps.**
 - At Hub the model barely beats raw NO2 (−1.9%): CPHGC was mostly off and the site is coastal, where sea breezes move the plume. Stated as a limit.
