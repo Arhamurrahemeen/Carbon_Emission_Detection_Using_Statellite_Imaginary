@@ -4,6 +4,7 @@ import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+import zlib
 
 import numpy as np
 import pandas as pd
@@ -36,7 +37,7 @@ def _site_labels(inputs, site_id, capacity, real_overpasses):
     """Train on real labels only when the NO2 features are real too; never pair synthetic NO2 with real labels."""
     if real_overpasses and inputs["real_labels"] is not None:
         return inputs["real_labels"], "real"
-    return make_nepra(site_id, SATELLITE_MONTHS, capacity, seed=hash(site_id) % 100), "synthetic"
+    return make_nepra(site_id, SATELLITE_MONTHS, capacity, seed=zlib.crc32(site_id.encode()) % 100), "synthetic"
 
 
 def _fy_sum(labels: pd.DataFrame, site_id: str, fy: str) -> float | None:

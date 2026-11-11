@@ -60,7 +60,7 @@ Companies are starting to disclose. Banks are now required to manage climate ris
 |---|---|---|---|
 | NO2 over the plant | Sentinel-5P TROPOMI, Earth Engine `COPERNICUS/S5P/OFFL/L3_NO2` | Earth Engine script → CSV | Free, open Copernicus licence. Data from mid-2018 |
 | Wind at overpass time (~13:30 local) | ERA5-Land hourly, Earth Engine `ECMWF/ERA5_LAND/HOURLY` (10 m u/v) | Earth Engine → CSV | Tells us which way the plume blew |
-| How much the plant really ran (training answers) | NEPRA: annual *Performance Evaluation Report, Generation* (FY2024-25) and monthly Fuel Charges Adjustment decisions | Annual report has plant-wise totals in readable text. Monthly decisions are scanned images, typed by hand | Biggest effort |
+| How much the plant really ran (training answers) | CPPA-G *Energy Procurement Report* spreadsheets (cppa.gov.pk), Jul 2024 – Sep 2026, checked against NEPRA's annual *Performance Evaluation Report, Generation* FY2024-25 | Machine-extracted (`verify/labels.py`). FY2024-25 totals match NEPRA exactly | Done: 27 real months |
 | The company's own claim | Company annual / integrated reports (Hub Power, Sahiwal's owner) | Entered by hand with page number and quote | Not found yet; Hub's CO2 figure may not be disclosed at plant level |
 | Tree health | Sentinel-2 surface reflectance + Cloud Score+, ESA WorldCover | Earth Engine (reused from the Shajar demo) | Already working |
 | Benchmark line on the chart | Climate TRACE API v6 | One call → CSV | Display only, never a model input. CC-BY 4.0 |
@@ -111,7 +111,7 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 | 0:00–1:00 | Problem and user | "A risk officer at a bank is renewing a loan to a coal power company. The company says it emits X and offsets Y with trees. The only proof is the company's own report. SBP now requires banks to manage climate risk. How does she check?" |
 | 1:00–2:00 | Solution | "We check both claims from space. NO2 from Sentinel-5P shows how hard the plant ran. Sentinel-2 shows whether the trees are alive. She gets one answer per claim: consistent, inconsistent or can't verify." |
 | 2:00–4:30 | Demo, one journey | Pick Sahiwal → see the plume map and monthly chart (our estimate, NEPRA, Climate TRACE) → enter the company's claim → verdict card → open the tree contracts → one plot verified and paid, one held → C04 buttons: impossible inputs rejected live |
-| 4:30–5:45 | Evidence | How closely our estimate tracks NEPRA on unseen months; the 2020 lockdown dip and the Jan 2026 Sahiwal outage showing in the data; detection rate on test claims (labelled synthetic). Label every synthetic input |
+| 4:30–5:45 | Evidence | Monthly plume vs metered generation r = 0.62; 61.7% better than the capacity rule of thumb and 30.4% better than raw NO2 (C07); annual understatements of 20%+ caught in 94–100% of windows with 0 false alarms; FY2026 satellite 5,982 vs metered 6,138 GWh. Shutdown months (Feb 2025, Oct 2025) on the chart. Label every synthetic input |
 | 5:45–7:00 | Value and limits | "Banks get independent evidence; farmers get paid for living trees. Limits: NO2 is not CO2, monsoon months can't be verified, two plants is a proof of concept. Next: more plants and a pilot with one bank." |
 
 **Words we never use:** fraud, breach, proves, zero carbon, net zero.
@@ -130,12 +130,12 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 
 6. **Satellites can't see CO2.** Correct. We measure NO2, estimate activity trained on NEPRA's metered records, then calculate CO2 as a range labelled "estimated".
 7. **Why NO2 and not SO2?** NO2 has a stronger, cleaner satellite signal at single plants. SO2 is noisier, and scrubbers at modern plants cut SO2 without changing coal burned.
-8. **How accurate is it?** [Fill in from our test: correlation and error on unseen months, share of months inside the 80% range.] Published work in Pakistan has already shown strong links between thermal plant output and NO2.
+8. **How accurate is it?** Month by month, it is noisy: r = 0.45 and an error of about 170 GWh on 9 held-out months, so single months abstain. Over a year the noise averages out: FY2026 satellite 5,982 GWh vs metered 6,138, and annual understatements of 20% or more were caught in 94–100% of test windows with no false alarms. Across all 27 months the plume correlates with metered generation at r = 0.62.
 9. **What if the model is wrong?** It says "can't verify" instead of guessing: too few clear days, inputs it hasn't seen, ranges too wide. C04 shows this live.
 10. **What about monsoon clouds?** July–September often can't be verified. We say so on screen.
 11. **What if the plant installs pollution controls?** Controls cut NO2 without cutting coal burned, so it would look like a drop in activity. We record each plant's equipment and dates, and treat a change as a break in the data.
 12. **Two plants and ~90 months is tiny.** Yes, it is a proof of concept. That is why we use a simple model and test on held-out months, not a big model.
-13. **Why not just use Climate TRACE?** It is a model, not a measurement. For CPHGC Hub (Climate TRACE asset 25455585), its activity figure is 3.82 TWh, while NEPRA's metered FY2024-25 figure is 0.67 TWh **(verify the Climate TRACE reporting year before saying this)**.
+13. **Why not just use Climate TRACE?** It is a model, not a measurement. For calendar 2025 it puts CPHGC Hub at 3,816 GWh; CPPA-G's metered figure is about 702 GWh, roughly 5.4× lower. It puts the Hub Power oil plant at 3,158 GWh when the meter shows almost zero. Climate TRACE itself rates its Hub capacity-factor confidence "low". For Sahiwal it is within about 9%.
 14. **Hub has two plants side by side. How do you separate them?** We don't. The satellite sees one combined plume, so we treat Hub as one site and compare it with both plants' NEPRA generation added together.
 15. **What about cities or other factories nearby?** We only use isolated plants. Clusters like Port Qasim and Korangi are excluded because plumes overlap.
 
@@ -150,6 +150,16 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 
 20. **Does "Inconsistent" mean the company lied?** No. It means "ask questions", like an auditor flagging an item for review.
 21. **Can you use this data commercially?** Sentinel data is free and open under the Copernicus licence. Climate TRACE is CC-BY 4.0 with credit. NEPRA reports are public.
+
+## 8b. The three challenges (one slide)
+
+| Challenge | Our answer | Evidence |
+|---|---|---|
+| C04 out-of-bounds guard | 8 live cases: 5 rejected, 1 low confidence, 1 claim not in source, 1 noise control | All pass; real monthly data abstains by itself |
+| C07 beat a baseline by 15% | Ridge on wind-corrected plume vs capacity rule and raw NO2 | 61.7% and 30.4% lower error |
+| C12 multimodal cross-check | Report table vs text vs meter vs satellite vs tree plots (7 checks) | 94–100% of understated annual claims caught, 0 false alarms |
+
+Full write-up: `docs/CHALLENGES.md`.
 
 ## 9. Limits we state ourselves
 
@@ -168,4 +178,7 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 - [ ] Find the claimed figures in Hub's and Sahiwal owner's annual reports
 - [ ] Heat rate per plant for the CO2 factor
 - [ ] NOx control equipment and dates at Sahiwal and Hub
-- [ ] Fill in accuracy numbers in question 8 after the first test
+- [x] Fill in accuracy numbers in question 8 after the first test
+- [x] Climate TRACE reporting year confirmed (2025, asset 25455585)
+- [ ] Rerun C07 tree benchmark on real WorldCover samples
+- Correction: there was no Sahiwal outage in Jan 2026 (metered 628 GWh). Near-zero months were Nov 2024, Feb 2025 and Oct 2025.

@@ -1,6 +1,7 @@
 """Load every input. Any real file that is missing is replaced by a labelled stand-in, and `sources` says which
 (real / synthetic / shajar_export). Nothing here touches the network."""
 from pathlib import Path
+import zlib
 
 import pandas as pd
 
@@ -24,7 +25,7 @@ def load_inputs(root: Path) -> dict:
     for s in sites.itertuples():
         df = _csv(raw / f"overpasses_{s.site_id}.csv")
         sources[f"overpasses_{s.site_id}"] = "real" if df is not None else "synthetic"
-        overpasses[s.site_id] = df if df is not None else synthetic.make_overpasses(s.site_id, SATELLITE_MONTHS, seed=hash(s.site_id) % 100)
+        overpasses[s.site_id] = df if df is not None else synthetic.make_overpasses(s.site_id, SATELLITE_MONTHS, seed=zlib.crc32(s.site_id.encode()) % 100)
     labels = _csv(raw / "generation_monthly.csv")
     passes = _csv(raw / "plot_passes.csv")
     samples = _csv(raw / "c07_samples.csv")

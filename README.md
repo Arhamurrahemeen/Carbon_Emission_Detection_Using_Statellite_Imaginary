@@ -1,33 +1,71 @@
 # Satellite Verification of Green Claims
 
-A coal power company tells its bank two things: how much it emits, and how many trees it planted to offset part of it. This project checks both claims from space.
+A coal power company tells its bank two things: how much it emits, and how many trees it planted to offset part of that. This project checks both claims from space.
 
-- **Emissions:** Sentinel-5P NO2 around the plant, corrected for wind, turned into an estimate of monthly generation by a model trained on NEPRA's metered records. CO2 is derived from that, always as a range.
+- **Emissions:** Sentinel-5P NO2 around the plant, corrected for wind, turned into an estimate of generation by a model trained on metered plant generation (CPPA-G). CO2 is derived from that, always as a range.
 - **Trees:** Sentinel-2 imagery of each offset plot, checked every quarter. Farmers are paid only when the trees are confirmed alive.
 - **Answer:** for each claim, CONSISTENT, INCONSISTENT or CANNOT_VERIFY. Impossible or weak inputs are rejected or flagged, never answered with a confident number.
 
 The satellite measures NO2, not CO2. An INCONSISTENT result is a reason to ask questions, not proof of a false statement.
 
-BattleVerse 2026, Iqra University · Battle of Intelligence · Pillar 5: Greenwashing & Disclosure Verification
+BattleVerse 2026, Iqra University · Battle of Intelligence · Pillar 5: Greenwashing & Disclosure Verification · Challenges C04, C07, C12
 
-## Run
+## Run it
+
+Needs Python 3.11+.
 
 ```bash
 pip install -r requirements.txt
-python -m verify.build
-streamlit run app/streamlit_app.py
-python -m pytest
+streamlit run app/streamlit_app.py     # opens the app on the committed results
 ```
+
+To rebuild every number from the data, or run the tests:
+
+```bash
+python -m verify.build                 # data/ -> outputs/ (about 30 s, no internet needed)
+python -m pytest                       # 80 tests, including the 8 C04 guard cases
+```
+
+Refreshing the source data needs the internet and, for Earth Engine, a one-time `earthengine authenticate`:
+
+```bash
+python scripts/export_overpasses.py --project <your-ee-project>   # Sentinel-5P NO2 + ERA5 wind -> data/raw/overpasses_*.csv
+python scripts/export_trees.py --project <your-ee-project>        # tree plots + C07 samples -> data/raw/
+python -m verify.labels data/raw/cppa/*.xlsx                      # CPPA-G spreadsheets -> data/raw/generation_monthly.csv
+python scripts/fetch_climate_trace.py                             # Climate TRACE benchmark
+```
+
+## Results (real data, Sahiwal coal plant)
+
+| What | Result |
+|---|---|
+| Monthly NO2 plume vs metered generation (27 months) | r = 0.62 |
+| Held-out months (Jan–Sep 2026), RMSE | 169.5 GWh/month, r = 0.45, 78% inside the 80% interval |
+| **C07** gain over capacity rule of thumb | **61.7%** (RMSE 442.0 → 169.5) |
+| **C07** gain over raw NO2 without wind correction | **30.4%** (RMSE 243.5 → 169.5) |
+| Annual claims understated by 20% / 40% / 60% caught | 94% / 100% / 100% of 16 rolling windows, 0% false alarms |
+| FY2026: satellite vs metered | 5,982 GWh (range 4,804–7,187) vs 6,138 GWh: agree |
+| **C04** guard cases | 8 of 8 pass |
+
+Single months are too noisy for a verdict and abstain; verdicts are given per fiscal year, which is what companies disclose. At the Hub site (a mostly idle coastal plant), the signal is weak; we state that as a limit. Full write-up: [docs/CHALLENGES.md](docs/CHALLENGES.md).
+
+## What is real and what is synthetic
+
+| Real | Synthetic or invented (labelled in the app) |
+|---|---|
+| Sentinel-5P NO2 and ERA5 wind, Jul 2018 – Nov 2026 | Company claims (no public report figure found; built from real metered numbers) |
+| Monthly plant generation, Jul 2024 – Sep 2026 (CPPA-G) | Farmers, plots and prices |
+| Climate TRACE benchmark | C07 tree samples, until the WorldCover export is rerun |
+| Sentinel-2 readings on the tree plots | |
+
+Sources, licences and download dates: [evidence_pack.md](evidence_pack.md).
 
 ## Docs
 
 - [Design spec](docs/specs/2026-11-11-green-claims-verification-design.md)
 - [Build plan](docs/plans/2026-11-11-build-plan.md)
+- [Challenges C04, C07, C12](docs/CHALLENGES.md)
 - [Pitch brief and jury Q&A](docs/PITCH_BRIEF.md)
-
-## Data
-
-All data is fetched once and committed, so nothing calls the internet at demo time. Sources, licences and download dates are in `evidence_pack.md`. Synthetic and invented data is labelled in file names, data flags and the app.
 
 ## Team
 
