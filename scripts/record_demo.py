@@ -1,10 +1,12 @@
 """Record the backup demo video of the local app, with captions burned in.
 
 Run the app first:  python -m streamlit run app/streamlit_app.py --server.port 8599
-Then:               python scripts/record_demo.py [--url http://localhost:8599] [--out demo.mp4]
+Then:               python scripts/record_demo.py [--url http://localhost:8599] [--out demo.mp4] [--short]
+--short records the 90-second cut that fits the deck's demo slot (slide 4).
 Needs: pip install playwright; python -m playwright install chromium; ffmpeg on PATH.
 """
 import argparse
+import re
 import shutil
 import subprocess
 import tempfile
@@ -83,15 +85,56 @@ def open_tab(page, name):
     page.evaluate(OVERLAY_JS)
 
 
-def run(url, video_dir):
+def short_demo(page):
+    """90-second cut for the deck's demo slot (slide 4): same click path as the pitch script."""
+    caption(page, "Sahiwal Coal Power Plant (1,320 MW). Is the company's reported figure true?", 4.5)
+    caption(page, "Our satellite estimate, the official grid record (CPPA-G), and what the company says, for FY2026.", 5.5)
+    scroll_to(page, "Does the company", "center")
+    caption(page, "The company's figure sits outside the range the satellite supports: refer for review. A mismatch, not an accusation.", 6.5)
+    scroll_to(page, "The plant from space")
+    caption(page, "Sentinel-5P NO2 plus wind: which way the plant's plume blew over 24 months of satellite passes.", 6)
+    page.get_by_text("Plant and tree contracts").click()
+    time.sleep(3)
+    caption(page, "Tree offsets: the company pays farmers only for trees the satellite sees alive.", 6)
+    caption(page, "", 0.5)  # clear before switching company, so no caption sits over the wrong screen
+
+    scroll_top(page)
+    page.locator('[data-testid="stSelectbox"]').first.click()
+    page.get_by_role("option", name=re.compile("Hub")).click()
+    time.sleep(5)
+    page.evaluate(OVERLAY_JS)
+    caption(page, "Hub: 4 of 10 checks agree, 5 disagree. The system does not flag everything.", 6)
+    scroll_to(page, "Each claim, checked")
+    caption(page, "Each claim checked in plain words: green where the evidence agrees, red where it doesn't.", 6)
+    caption(page, "", 0.5)
+
+    scroll_top(page)
+    open_tab(page, "Reliability (C04)")
+    page.get_by_role("button", name="Run all 8 checks").click()
+    time.sleep(2)
+    caption(page, "Impossible inputs, like a 200% emissions cut, are refused with a reason. No number is shown.", 8)
+    caption(page, "", 0.5)
+
+
+def run(url, video_dir, short=False):
+    """Record one take. Returns the raw video and how many seconds of loading to trim off the start."""
     with sync_playwright() as p:
         browser = p.chromium.launch()
         ctx = browser.new_context(viewport={"width": W, "height": H}, device_scale_factor=1,
                                   record_video_dir=video_dir, record_video_size={"width": W, "height": H})
+        t0 = time.time()
         page = ctx.new_page()
         page.goto(url)
         page.get_by_role("tab", name="Verdict").wait_for(timeout=60000)
         page.evaluate(OVERLAY_JS)
+        if short:
+            warm_up(page)  # loads off-camera; trimmed below
+            trim = time.time() - t0
+            short_demo(page)
+            video = page.video.path()
+            ctx.close()
+            browser.close()
+            return Path(video), trim
         # Title card covers the page while charts and map tiles load behind it.
         card(page, "Green Claims Check",
              "Checking a company's green claims against what satellites actually see.<br>Team 13 · IU3048 · BattleVerse 2026", 0,
@@ -135,19 +178,20 @@ def run(url, video_dir):
         video = page.video.path()
         ctx.close()
         browser.close()
-    return Path(video)
+    return Path(video), 0.0
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--url", default="http://localhost:8599")
     ap.add_argument("--out", default="demo.mp4")
+    ap.add_argument("--short", action="store_true", help="90-second cut for the deck's demo slot")
     a = ap.parse_args()
     ffmpeg = shutil.which("ffmpeg")
     if not ffmpeg:
         raise SystemExit("ffmpeg not found on PATH. Install it and open a new terminal.")
     with tempfile.TemporaryDirectory() as tmp:
-        webm = run(a.url, tmp)
-        subprocess.run([ffmpeg, "-y", "-loglevel", "error", "-i", str(webm), "-c:v", "libx264",
+        webm, trim = run(a.url, tmp, a.short)
+        subprocess.run([ffmpeg, "-y", "-loglevel", "error", "-ss", f"{trim:.2f}", "-i", str(webm), "-c:v", "libx264",
                         "-pix_fmt", "yuv420p", "-crf", "20", "-movflags", "+faststart", a.out], check=True)
     print("wrote", a.out)

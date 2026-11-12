@@ -17,6 +17,8 @@ Legend: **[x]** done and shown, **[~]** done but weak or needs a fix, **[ ]** mi
 
 ## 0. Fix before the pitch (ranked by marks at risk)
 
+> **Latest, 12 Nov:** the team pitch is now **`Team13_Merged_Pitch_v4.pptx`**: Green Claims Check and Shajar Ledger merged, **factory first**, with banks as a side feature. Its timings are 20, 40, 50, 20 (3b), 90, 90, 70 and 40 s, which adds up to 7:00. Fixes 1–8 below carry over into v4. The rubric reasoning in section 4 still holds, with the user now being the factory. See `DISCUSSION_LOG.md` question 37.
+
 > **Update, 2026-11-12:** the deck has been rebuilt on the official **`Battle_of_Intelligence_7_Minute_Pitch_Template.pptx`** as **`Satellite_Verification_Pitch_Deck_v2.pptx`**, with a PDF next to it.
 > - It follows the template's 7 slides plus a Q&A slide, one slide per rubric line.
 > - Fixes 1–8 below are applied in v2, and its speaker notes match the on-slide timings: 20, 40, 60, 90, 90, 75 and 45 s.

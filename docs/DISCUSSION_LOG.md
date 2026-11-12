@@ -195,6 +195,16 @@ No to both. This came from a team chat, and our own slide 2 caused the confusion
 
 **What changed:** slide 2 used to say the officer decides "whether to refer… green claims for review before a loan", without saying why the bank cares. That reads as "the bank looks at emissions and decides the loan". It now says the loan terms and the bank's climate-risk report rely on the figures, and that the bank is not refusing high emitters.
 
+### 37. Merge with Shajar, and factory first (12 Nov)
+**Decision:** one pitch for Team 13, merging this project (Green Claims Check) with Baneen's Shajar Ledger. **The factory is the user;** banks and buyers are a side feature. Deck: `Team13_Merged_Pitch_v4.pptx`.
+
+- **Why merge:** both decks used the same three challenges, and judges score one solution per team. Ours brings the evidence (emissions model, C07 numbers, official records). Shajar brings the farmer side: payments, the Urdu phone screens and the photo-to-payment slide.
+- **Why factory first:** a clear customer who pays and gets direct value. It stops paying for dead trees, and its emission and offset claims hold up when buyers, the EU carbon border charge or lenders ask.
+- **Kept on purpose:** emissions are step 1 of the factory's journey (they size the tree offset), because the emissions model is our strongest evidence. The tree model is only 11.6% better than the simple rule.
+- **Answer to "isn't the factory checking itself?":** the factory runs the check but does not produce the numbers. They come from public satellite data it cannot edit, so a buyer or bank can re-run the check.
+- **Left out of the pitch:** Shajar's "Checking the factory's numbers" slide. It treated Climate TRACE as the truth, and Korangi NO2 can't be attributed to one factory. Climate TRACE is shown as a comparison only.
+- **Still to align:** the Green Claims Check app still says "satellite evidence for a bank's risk officer" and "Refer for review". In the demo, say that this is what a buyer or bank would see if they re-ran the check, or update the app wording.
+
 ## Still open
 - A real company figure from Hub Power's annual report.
 - Optional: the "check a claim" input box (question 29).
