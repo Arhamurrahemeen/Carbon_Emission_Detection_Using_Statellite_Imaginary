@@ -181,7 +181,20 @@ IU shared the **Battle of Stocks** template. We kept its look and timed structur
 It's CPPA-G's monthly record of electricity each plant sold to the grid, measured by meters and published as Excel (it matches NEPRA's annual report). It's the model's answer key for training and testing, our proof the satellite tracks reality (5,896 vs 6,138 GWh), and cross-check X1. Renamed in the app to "Metered sales to the grid (CPPA-G)".
 **"If you have the meter, why the satellite?"** The meter only exists for plants selling to the grid and only shows electricity; factories, cement, steel and captive plants have none. The satellite is independent, works anywhere and goes back to 2018 (monthly meter files only to July 2024). We train and prove it where both exist, then it can check where no meter is published.
 
+### 36. If a company emits a lot, will the bank refuse the loan? And is the loan for planting trees? (12 Nov, Baneen)
+No to both. This came from a team chat, and our own slide 2 caused the confusion.
+
+- **The loan is the company's normal business loan,** not a loan for trees. The trees are the company's own offset programme, paid by the company to the farmers. The "loan for trees" story was dropped on 12 Nov (questions 12–14 are the history).
+- **The bank doesn't punish high emissions.** Every coal plant emits a lot, and the bank knows it. We check whether the *reported* figures are true. High but honest: the loan goes ahead on true numbers. Understated: refer for review.
+- **Why the bank cares if the numbers are true:**
+  - some loans tie the interest rate to emission targets (sustainability-linked loans), so a false "we cut 25%" wins cheaper money
+  - SBP's climate-risk rules make the bank account for its borrowers' climate risk
+  - understated emissions hide carbon-cost exposure
+- **"The bank checks the money isn't pocketed"** is a different product: tracking how the money is spent on one funded project. We don't track money; we check claims.
+- **"The satellite checks whether planting happened"** is right, but it is the smaller half. The main half is emissions, from NO2.
+
+**What changed:** slide 2 used to say the officer decides "whether to refer… green claims for review before a loan", without saying why the bank cares. That reads as "the bank looks at emissions and decides the loan". It now says the loan terms and the bank's climate-risk report rely on the figures, and that the bank is not refusing high emitters.
+
 ## Still open
 - A real company figure from Hub Power's annual report.
-- Re-export the deck PDF (team number Team 13, IU3048, is now on slide 1).
 - Optional: the "check a claim" input box (question 29).

@@ -126,7 +126,7 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 | Time | Slide (marks) | What we say and do |
 |---|---|---|
 | 0:00–0:20 | 1. Title | "Team 13, IU3048. Battle of Intelligence, Pillar 5. We check a coal company's emissions and tree-offset claims against satellite evidence, and tell its bank which claims don't add up." |
-| 0:20–1:00 | 2. Problem and role of AI (15) | "A bank's risk officer is renewing a loan to a coal power company. The only evidence for its emissions and tree offsets is the company's own report. Why AI: the NO2 a satellite sees depends on wind, season and plant, so no fixed formula turns it into plant output. A model learns that link from 27 months of official records." |
+| 0:20–1:00 | 2. Problem and role of AI (15) | "A bank's risk officer is renewing a normal business loan to a coal power company. The loan terms, and the bank's own climate-risk report, rely on the company's emission and tree figures, and those figures come only from the company. The bank isn't refusing high emitters; it needs to know the numbers are true. Why AI: the NO2 a satellite sees depends on wind, season and plant, so no fixed formula turns it into plant output. A model learns that link from 27 months of official records." |
 | 1:00–2:00 | 3. AI solution and workflow (30, with slide 4) | Walk the table row by row: emissions (Sentinel-5P NO2, ERA5 wind and CPPA-G records, then the plume model, then a yearly range and a verdict per claim), trees (Sentinel-2, then a random forest, then trees seen alive and the farmer paid), and the quality row: 3 gates, trained on 18 months, tested on 9 unseen, "refer for review", never an accusation. "Downloaded once and saved; the demo doesn't need a live connection." |
 | 2:00–3:30 | 4. Demonstration (30, with slide 3) | Switch to the app: verdict strip, range plot ("the company's 4,603 sits outside the satellite range"), 3D map (plume, then tree contracts), **switch the company to Hub** ("4 checks agree: it doesn't flag everything"), Reliability tab ("we cut emissions by 200%" is rejected, no number shown). Say: "The company figures are synthetic, built from real metered numbers." |
 | 3:30–5:00 | 5. Three challenges (20) | About 25 seconds each. **C04:** 8 of 8 correct, 6 rejected, 1 low confidence, 1 normal value accepted. Gap: limits are hand-set. **C07:** 62% and 30% less error than the rule of thumb and raw NO2. Gap: the tree model is only 11.6% better, short of 15%. **C12:** Sahiwal 10 of 10 disagree, Hub 4 agree and 5 disagree. Gap: company figures synthetic. **Learning:** single months were too noisy (23% error), so we judge fiscal years (about 7%) |
@@ -146,6 +146,11 @@ Sentinel-2 photographs each plot every few days. We compute a greenness score (N
 2. **Why not let the company pay?** Then the company pays for its own report card, the same problem we are solving.
 3. **Who else does this?** GHGSat, Kayrros and Floodlight sell satellite emission checks abroad. Nobody checks disclosures this way in Pakistan, and no other Pillar 5 team here uses satellites.
 4. **How do you make money?** Yearly fee per company checked. Demo numbers, not tested with banks.
+5a. **If the company emits a lot, does the bank refuse the loan?** No. Every coal plant emits a lot, and the bank knows it. We don't judge whether emissions are high; we check whether the *reported* figures are true. High but honest: the loan goes ahead on true numbers. Understated: refer for review. Three things depend on the numbers being true:
+   - the loan terms, where some loans tie the interest rate to emission targets (sustainability-linked loans)
+   - the bank's own climate-risk reporting to SBP
+   - the carbon-cost exposure the bank is carrying
+5b. **Is the loan for planting trees?** No. The loan is the company's normal business loan. The trees are the company's own offset programme, paid by the company to the farmers. We check the tree claim the same way we check the emissions claim.
 5. **Do banks actually want this?** Not yet at scale. Regulation is creating the need now. That is our "why now", and our next step is one pilot bank.
 
 **Technical**
