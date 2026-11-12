@@ -138,10 +138,11 @@ def map_deck(site: dict, plume: pd.DataFrame, co2_t: float | None, trace_t: floa
         p["label"] = p["trees_planted"].map("{:,} trees contracted".format) + " · " + p["alive"].map({True: "trees seen alive", False: "no trees seen"})
         p["src_lon"], p["src_lat"] = lon, lat
         layers.append(pdk.Layer("ArcLayer", data=p, get_source_position="[src_lon, src_lat]", get_target_position="[lon, lat]",
-                                get_source_color=_rgb(accent), get_target_color="color", get_width=3, pickable=False))
+                                get_source_color=_rgb(accent), get_target_color="color", get_width=3, get_height=0.35, pickable=False))
         layers.append(pdk.Layer("ColumnLayer", data=p, get_position="[lon, lat]", get_elevation="trees_planted", elevation_scale=6,
                                 radius=9000, get_fill_color="color", pickable=True, extruded=True))
-        view = _view((lat + p["lat"].mean()) / 2, (lon + p["lon"].mean()) / 2, 5.4, pitch=45, bearing=-10)
+        # plots sit ~900 km from the plant: zoom out and tilt less so the whole arc stays in frame
+        view = _view((lat + p["lat"].mean()) / 2, (lon + p["lon"].mean()) / 2, 4.6, pitch=30, bearing=-10)
     return pdk.Deck(layers=layers, initial_view_state=view, map_style=None if satellite else "light",
                     map_provider=None if satellite else "carto",
                     tooltip={"html": "<b>{name}</b><br/>{label}", "style": {"fontFamily": FONT, "fontSize": "13px"}})
