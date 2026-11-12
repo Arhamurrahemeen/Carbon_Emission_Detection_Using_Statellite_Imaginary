@@ -173,6 +173,8 @@ https://carbonemissiondetectionusingstatelliteimaginary-lvdbcjesxlusrz.streamlit
 ### 34. Which pitch template did we use?
 IU shared the **Battle of Stocks** template. We kept its look and timed structure, retitled it Battle of Intelligence and filled it to our rubric: 9 slides, 7:00 plus Q&A, including a data-pipeline slide and real satellite images (Baneen's request, because every jury asks how the data is collected and made usable).
 
+**Update (12 Nov):** IU then shared the official **Battle of Intelligence** template. We rebuilt the deck on it as `Satellite_Verification_Pitch_Deck_v2.pptx`, with a PDF beside it: 7 slides plus Q&A, one slide per rubric line. The data pipeline is now part of slide 3, the satellite images sit on the demo slide (4), and the fixes from `JUDGING_CHECKLIST.md` are in. Present v2; the 9-slide deck is reference only.
+
 ---
 
 ### 35. The app shows an "Electricity meter" number. Where does it come from, and why?

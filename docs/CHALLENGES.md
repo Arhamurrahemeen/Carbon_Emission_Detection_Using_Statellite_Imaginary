@@ -8,7 +8,7 @@ Numbers come from `outputs/metrics.json` (`python -m verify.build`, built 11 Nov
 |---|---|---|---|
 | **C04** Out-of-bounds guard | 5 impossible inputs → rejection or low confidence, never a confident wrong number | 8 live cases: 5 rejected out-of-bounds, 1 low-confidence, 1 claim not in source, 1 noise control that passes | `tests/test_guard.py`, 19 tests; app "Reliability" page; real monthly data abstains on its own |
 | **C07** Beat a simple baseline by ≥15% | RMSE or F1 gain over a heuristic | Pollution model RMSE 169.5 vs 442.0 (capacity rule) and 243.5 (raw NO2) GWh | **61.7%** and **30.4%** gain on 9 held-out real months (Sahiwal) |
-| **C12** Multimodal cross-check | Declared numbers vs text claims vs satellite | 7 cross-checks (X1–X7) between report table, report text, metered generation, satellite range, tree plots | Annual understatements of 20%+ caught in 94–100% of 16 rolling windows, 0 false alarms; demo claim caught by the satellite alone |
+| **C12** Multimodal cross-check | Declared numbers vs text claims vs satellite | 10 checks of 7 kinds (X1–X7; X1 and X2 run on both the report table and the report text) between report table, report text, metered generation, satellite range, tree plots | Sahiwal: 10 of 10 disagree. Hub: 4 agree, 5 disagree, 1 cannot compare, so the checks don't flag everything. Climate TRACE about 5x off at Hub. Related model evidence: annual understatements of 20% or more caught in 94–100% of 16 rolling windows, 0 false alarms |
 
 ---
 

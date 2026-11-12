@@ -2,15 +2,15 @@
 
 New words are explained in [GLOSSARY.md](GLOSSARY.md).
 
-BattleVerse 2026 · Battle of Intelligence · Pillar 5 (Greenwashing & Disclosure Verification) · Challenge C04
-Draft, 11 Nov 2026. Items marked **(verify)** need checking before they go on a slide.
+BattleVerse 2026 · Battle of Intelligence · Pillar 5 (Greenwashing & Disclosure Verification) · Challenges C04, C07, C12 · Team 13 (IU3048)
+Updated 12 Nov 2026 for deck v2. Items marked **(verify)** need checking before they go on a slide. Scoring and the pre-pitch fix list: [JUDGING_CHECKLIST.md](JUDGING_CHECKLIST.md).
 
 ---
 
 ## Accuracy in one breath
 
 - **About 77% accurate for one month.** Too uncertain to judge a single month, so the system refuses to.
-- **About 93% accurate for a year** on average (85% in the strictest test).
+- **About 93% accurate for a year**: the average over 16 overlapping 12-month windows (85% in the strictest forward test). We have 27 months of official records, not 16 years.
 - **62% less error than the rule of thumb** banks use today, and 30% less than raw satellite readings. C07 asks for 15%.
 - All tested on months the model had never seen.
 
@@ -114,20 +114,27 @@ The NO2-to-CO2 ratio changes with coal type, burner settings and pollution contr
 
 Sentinel-2 photographs each plot every few days. We compute a greenness score (NDVI) from red and near-infrared light. Living trees score high, and bare soil scores low. Each quarter, a plot with greenness of at least 0.35 and less than 30% cloud passes, and the payment is released. Below 0.35, the payment is held. Too cloudy: wait for the next clear photo. CO2 absorbed is estimated from the number of trees and the IPCC default, not measured.
 
-## 7. Pitch script (7 minutes, matches the deck)
+## 7. Pitch script (7 minutes, matches deck v2)
 
-Deck: `Satellite_Verification_Pitch_Deck.pptx` (IU template, 9 slides including Q&A). Satellite images used on slide 5: `docs/img/`.
+**Deck:** `Satellite_Verification_Pitch_Deck_v2.pptx`, with a PDF beside it. It is built on the official `Battle_of_Intelligence_7_Minute_Pitch_Template.pptx`: 7 pitch slides plus a Q&A slide, and each slide maps to one rubric line. The satellite images on slide 4 come from `docs/img/`. The old 9-slide `Satellite_Verification_Pitch_Deck.pptx` is kept for reference only; do not present it.
 
-| Time | Slide | What we say |
+**Before the slot:**
+- Open the hosted app once, so map imagery is cached.
+- Check that the Model test tab shows tree F1 0.89, not "not a result yet".
+- Keep `Demo_Backup.mp4` ready. If it is used, say: "This is a recording of the same app running locally."
+
+| Time | Slide (marks) | What we say and do |
 |---|---|---|
-| 0:00–0:30 | 1. Title | "We check both halves of a company's green claim, its pollution and its trees, from space. The satellite measures NO2, not CO2." |
-| 0:30–1:15 | 2. Problem | "A bank's risk officer is renewing a loan to a coal power company. The only evidence for its emissions and offsets is its own report. SECP disclosure starts 2026–27; SBP's climate-risk deadline is 2029." |
-| 1:15–1:45 | 3. Approach | "Each claim gets independent evidence: NO2 for emissions, Sentinel-2 for trees, and seven cross-checks between the report, the meter and the satellite." |
-| 1:45–2:30 | 4. Data | Walk the table: Sentinel-5P NO2 grid per daily pass, ERA5 wind, CPPA-G monthly Excel (matches NEPRA exactly), Sentinel-2 + WorldCover, the company report. "Downloaded once, saved as files; the demo doesn't need a live connection." |
-| 2:30–4:15 | 5. Live demo | Point at the two images first: the real NO2 plume over Sahiwal and the Sentinel-2 photo of the plant. Then the app: verdict strip → range plot → 3D map (plume rose, then tree contracts) → claim rows → Reliability tab, run all 8 checks. Say the company claims are synthetic |
-| 4:15–5:00 | 6. Evidence | "About 77% accurate for one month, so it refuses to judge a single month. About 93% for a year. Understated yearly claims caught 94–100% of the time, no honest claim flagged." |
-| 5:00–6:10 | 7. Challenges | C04 refused inputs, C07 62% and 30% less error (tree model 11.6%, an honest gap), C12 Climate TRACE off about 5x at Hub. Adaptation: verdicts moved to the fiscal year |
-| 6:10–7:00 | 8. Value, limits, next step | Exposure range, stated limits, pilot with one bank. Close: "Satellites can't see CO2, but they can tell a bank when a company's green numbers don't add up." |
+| 0:00–0:20 | 1. Title | "Team 13, IU3048. Battle of Intelligence, Pillar 5. We check a coal company's emissions and tree-offset claims against satellite evidence, and tell its bank which claims don't add up." |
+| 0:20–1:00 | 2. Problem and role of AI (15) | "A bank's risk officer is renewing a loan to a coal power company. The only evidence for its emissions and tree offsets is the company's own report. Why AI: the NO2 a satellite sees depends on wind, season and plant, so no fixed formula turns it into plant output. A model learns that link from 27 months of official records." |
+| 1:00–2:00 | 3. AI solution and workflow (30, with slide 4) | Walk the table row by row: emissions (Sentinel-5P NO2, ERA5 wind and CPPA-G records, then the plume model, then a yearly range and a verdict per claim), trees (Sentinel-2, then a random forest, then trees seen alive and the farmer paid), and the quality row: 3 gates, trained on 18 months, tested on 9 unseen, "refer for review", never an accusation. "Downloaded once and saved; the demo doesn't need a live connection." |
+| 2:00–3:30 | 4. Demonstration (30, with slide 3) | Switch to the app: verdict strip, range plot ("the company's 4,603 sits outside the satellite range"), 3D map (plume, then tree contracts), **switch the company to Hub** ("4 checks agree: it doesn't flag everything"), Reliability tab ("we cut emissions by 200%" is rejected, no number shown). Say: "The company figures are synthetic, built from real metered numbers." |
+| 3:30–5:00 | 5. Three challenges (20) | About 25 seconds each. **C04:** 8 of 8 correct, 6 rejected, 1 low confidence, 1 normal value accepted. Gap: limits are hand-set. **C07:** 62% and 30% less error than the rule of thumb and raw NO2. Gap: the tree model is only 11.6% better, short of 15%. **C12:** Sahiwal 10 of 10 disagree, Hub 4 agree and 5 disagree. Gap: company figures synthetic. **Learning:** single months were too noisy (23% error), so we judge fiscal years (about 7%) |
+| 5:00–6:15 | 6. Value and AI evidence (20) | "Carbon-cost exposure for Sahiwal: USD 20M to 519M a year, PKR 5.6 to 145 billion. It's wide because we use two carbon prices, 5 and 80 dollars a tonne; the satellite isn't the uncertain part." Then the measured results: FY2026 3.9% from the official record, about 7% across 16 overlapping 12-month windows, understated claims caught 94–100% with no false alarms. "We withdrew an early 97.5% because the model had seen those months." |
+| 6:15–7:00 | 7. Feasibility and closing (15) | Works today: app, real data, 78 tests. To deploy: a paid Earth Engine licence and the bank's borrower reports. Next: a pilot with one bank, comparing our verdicts with its audits. Close: "Satellites can't see CO2, but they can tell a bank when a company's green numbers don't add up." |
+| 7:00–10:00 | 8. Q&A | Answers in section 8 below, `DISCUSSION_LOG.md` and `JUDGING_CHECKLIST.md` |
+
+**Who speaks** (fill in before rehearsal; one hand-over per slide at most): slides 1–3 ______ · slide 4 demo ______ · slides 5–7 ______ · Q&A: everyone, with technical questions to Arham.
 
 **Words we never use:** fraud, breach, proves, zero carbon, net zero.
 
@@ -145,11 +152,11 @@ Deck: `Satellite_Verification_Pitch_Deck.pptx` (IU template, 9 slides including 
 
 6. **Satellites can't see CO2.** Correct. We measure NO2, estimate activity trained on metered grid sales (CPPA-G, matching NEPRA), then calculate CO2 as a range labelled "estimated".
 7. **Why NO2 and not SO2?** NO2 has a stronger, cleaner satellite signal at single plants. SO2 is noisier, and scrubbers at modern plants cut SO2 without changing coal burned.
-8. **How accurate is it?** About 77% for a single month, so one month alone is too uncertain and the system refuses to judge it. About 93% for a whole year on average (worst year about 80%; our strictest test, learning only from the past, gave 85%). Every one of these figures was tested on months the model had never seen. An earlier 97.5% figure was withdrawn because the model had already seen those months.
+8. **How accurate is it?** About 77% for a single month, so one month alone is too uncertain and the system refuses to judge it. About 93% for a whole year, averaged over 16 overlapping 12-month windows (worst window about 80%; our strictest test, learning only from the past, gave 85%). Every one of these figures was tested on months the model had never seen. An earlier 97.5% figure was withdrawn because the model had already seen those months.
 9. **What if the model is wrong?** It says "can't verify" instead of guessing: too few clear days, inputs it hasn't seen, ranges too wide. C04 shows this live.
 10. **What about monsoon clouds?** July–September often can't be verified. We say so on screen.
 11. **What if the plant installs pollution controls?** Controls cut NO2 without cutting coal burned, so it would look like a drop in activity. We record each plant's equipment and dates, and treat a change as a break in the data.
-12. **Two plants and ~90 months is tiny.** Yes, it is a proof of concept. That is why we use a simple model and test on held-out months, not a big model.
+12. **Two plants and 27 months of official records is tiny.** (The satellite record goes back to 2018, about 90 months, but only 27 months have official generation figures to learn from.) Yes, it is a proof of concept. That is why we use a simple model and test on held-out months, not a big model.
 13. **Why not just use Climate TRACE?** It is a model, not a measurement. For calendar 2025 it puts CPHGC Hub at 3,816 GWh; CPPA-G's metered figure is about 702 GWh, roughly 5.4× lower. It puts the Hub Power oil plant at 3,158 GWh when the meter shows almost zero. Climate TRACE itself rates its Hub capacity-factor confidence "low". For Sahiwal it is within about 9%.
 14. **Hub has two plants side by side. How do you separate them?** We don't. The satellite sees one combined plume, so we treat Hub as one site and compare it with both plants' NEPRA generation added together.
 15. **What about cities or other factories nearby?** We only use isolated plants. Clusters like Port Qasim and Korangi are excluded because plumes overlap.
@@ -166,13 +173,15 @@ Deck: `Satellite_Verification_Pitch_Deck.pptx` (IU template, 9 slides including 
 20. **Does "Inconsistent" mean the company lied?** No. It means "ask questions", like an auditor flagging an item for review.
 21. **Can you use this data commercially?** Sentinel data is free and open under the Copernicus licence. Climate TRACE is CC-BY 4.0 with credit. NEPRA reports are public.
 
-## 8b. The three challenges (one slide)
+## 8b. The three challenges (deck v2, slide 5)
 
-| Challenge | Our answer | Evidence |
+| Challenge | Our answer | Evidence and gap |
 |---|---|---|
-| C04 out-of-bounds guard | 8 live cases: 5 rejected, 1 low confidence, 1 claim not in source, 1 noise control | All pass; real monthly data abstains by itself |
-| C07 beat a baseline by 15% | Our model vs two simple methods: a rule of thumb (plants run at about 23% of capacity) and raw satellite readings | Our error is 62% and 30% smaller (misses by 170 GWh a month vs 442 and 244) |
-| C12 multimodal cross-check | The company's table vs its own text vs the meter vs the satellite vs the tree plots (7 checks) | Caught 94–100% of yearly claims understated by 20% or more, with no false alarms (likely a little optimistic: see CHALLENGES.md) |
+| C04 out-of-bounds guard | 3 gates; every answer is OK, Low confidence or Rejected. Normal sensor noise is let through | 8 of 8 correct: 6 rejected (including a claim not in the source), 1 low confidence, 1 noise control accepted. Gap: limits are hand-set, so a plausible false figure passes (C12 catches it) |
+| C07 beat a baseline by 15% | Our model vs two simple methods: a rule of thumb (plants run at about 23% of capacity) and raw satellite readings | Our error is 62% and 30% smaller (misses by 170 GWh a month vs 442 and 244). Gap: the tree model is only 11.6% better than a tuned threshold |
+| C12 multimodal cross-check | 10 checks of 7 kinds: the company's table and text vs the official record, the satellite and the tree plots | Sahiwal: 10 of 10 disagree. Hub: 4 agree, 5 disagree, 1 cannot compare, so it doesn't flag everything. Climate TRACE about 5x off at Hub. Gap: company figures synthetic |
+
+The yearly catch rate (94–100% of claims understated by 20% or more, no false alarms) is model evidence and belongs on slide 6, not here.
 
 Full write-up: `docs/CHALLENGES.md`.
 
